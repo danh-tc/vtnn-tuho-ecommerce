@@ -1,0 +1,347 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+
+// ============================================================
+// Admin shell
+// ============================================================
+.rethink-admin-shell {
+  display: flex;
+  min-height: 100vh;
+  background: #F5F5F5;
+}
+
+// ============================================================
+// Sidebar
+// ============================================================
+.rethink-admin-sidebar {
+  width: 240px;
+  background: $primary-dark;
+  color: $white;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 200;
+  transition: $transition;
+
+  @media (max-width: 768px) {
+    width: 64px;
+  }
+
+  &__logo {
+    padding: $space-5 $space-4;
+    border-bottom: 1px solid rgba($white, 0.1);
+  }
+
+  &__logo-text {
+    font-size: 18px;
+    font-weight: 800;
+    color: $white;
+    white-space: nowrap;
+    overflow: hidden;
+
+    span { color: $accent; }
+
+    @media (max-width: 768px) { display: none; }
+  }
+
+  &__logo-sub {
+    font-size: 11px;
+    color: rgba($white, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+
+    @media (max-width: 768px) { display: none; }
+  }
+
+  &__logo-icon {
+    display: none;
+    font-size: 28px;
+
+    @media (max-width: 768px) { display: block; }
+  }
+
+  &__nav {
+    flex: 1;
+    padding: $space-3 0;
+    overflow-y: auto;
+  }
+
+  &__nav-section {
+    margin-bottom: $space-4;
+  }
+
+  &__nav-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba($white, 0.4);
+    padding: $space-2 $space-4;
+
+    @media (max-width: 768px) { display: none; }
+  }
+
+  &__nav-link {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    padding: $space-2 $space-4;
+    color: rgba($white, 0.8);
+    font-size: 14px;
+    font-weight: 500;
+    transition: $transition;
+    border-left: 3px solid transparent;
+
+    &:hover {
+      background: rgba($white, 0.08);
+      color: $white;
+    }
+
+    &--active {
+      background: rgba($white, 0.12);
+      color: $white;
+      border-left-color: $accent;
+    }
+  }
+
+  &__nav-icon { font-size: 18px; flex-shrink: 0; }
+
+  &__nav-label-text {
+    @media (max-width: 768px) { display: none; }
+  }
+
+  &__footer {
+    padding: $space-4;
+    border-top: 1px solid rgba($white, 0.1);
+    font-size: 13px;
+    color: rgba($white, 0.5);
+
+    @media (max-width: 768px) { display: none; }
+  }
+}
+
+// ============================================================
+// Main content area
+// ============================================================
+.rethink-admin-main {
+  margin-left: 240px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 768px) {
+    margin-left: 64px;
+  }
+}
+
+.rethink-admin-topbar {
+  background: $white;
+  border-bottom: 1px solid #E0E0E0;
+  padding: 0 $space-5;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  &__title,
+  &__page-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: $text-main;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+  }
+
+  &__user-info {
+    font-size: 14px;
+    color: $text-muted;
+  }
+}
+
+.rethink-admin-content {
+  padding: $space-5;
+  flex: 1;
+}
+
+// ============================================================
+// Stat cards
+// ============================================================
+.rethink-admin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-4;
+  margin-bottom: $space-5;
+
+  @include lg {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.rethink-admin-stat-card {
+  background: $white;
+  border-radius: $border-radius;
+  padding: $space-5;
+  box-shadow: $shadow-sm;
+  border-left: 4px solid $primary;
+
+  &--danger  { border-left-color: $danger; }
+  &--warning { border-left-color: $warning; }
+  &--info    { border-left-color: $info; }
+
+  &__label {
+    font-size: 13px;
+    color: $text-muted;
+    margin-bottom: $space-1;
+  }
+
+  &__value {
+    font-size: 28px;
+    font-weight: 800;
+    color: $text-main;
+    line-height: 1;
+  }
+
+  &__sub {
+    font-size: 12px;
+    color: $text-muted;
+    margin-top: $space-1;
+  }
+}
+
+// ============================================================
+// Data tables
+// ============================================================
+.rethink-admin-table-card {
+  background: $white;
+  border-radius: $border-radius;
+  box-shadow: $shadow-sm;
+  overflow: hidden;
+
+  &__header {
+    padding: $space-4 $space-5;
+    border-bottom: 1px solid #F0F0F0;
+    @include flex-between;
+
+    h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: $text-main;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: $space-3;
+    align-items: center;
+  }
+}
+
+// Legacy aliases (non-BEM, kept for compatibility)
+.rethink-admin-table-header {
+  padding: $space-4 $space-5;
+  border-bottom: 1px solid #F0F0F0;
+  @include flex-between;
+
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: $text-main;
+  }
+}
+
+.rethink-admin-table-actions {
+  display: flex;
+  gap: $space-3;
+  align-items: center;
+}
+
+.rethink-admin-search-input {
+  @include input-base;
+  width: 240px;
+  padding: $space-2 $space-3;
+  font-size: 13px;
+}
+
+.rethink-admin-btn--add {
+  @include btn-primary;
+  font-size: 13px;
+  padding: $space-2 $space-4;
+}
+
+.rethink-admin-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: $space-3 $space-4;
+    text-align: left;
+    font-size: 14px;
+    border-bottom: 1px solid #F5F5F5;
+  }
+
+  th {
+    background: #FAFAFA;
+    font-weight: 700;
+    color: $text-muted;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  td { color: $text-main; }
+
+  tbody tr:hover { background: #FAFAFA; }
+}
+
+.rethink-admin-badge {
+  display: inline-block;
+  padding: 2px $space-2;
+  border-radius: $border-radius-sm;
+  font-size: 12px;
+  font-weight: 600;
+
+  &--pending   { background: #FFF3E0; color: $warning; }
+  &--confirmed { background: #E8F5E9; color: $primary; }
+  &--shipped   { background: #E3F2FD; color: $info; }
+  &--delivered { background: #E8F5E9; color: $primary-dark; }
+  &--cancelled { background: #FFEBEE; color: $danger; }
+  &--paid      { background: #E8F5E9; color: $primary-dark; }
+}
+
+.rethink-admin-action-btns {
+  display: flex;
+  gap: $space-2;
+}
+
+.rethink-admin-btn--edit {
+  @include btn-base;
+  font-size: 12px;
+  padding: $space-1 $space-2;
+  background: $bg-light;
+  color: $primary;
+  border: 1px solid $border;
+
+  &:hover { background: $primary; color: $white; }
+}
+
+.rethink-admin-btn--delete {
+  @include btn-base;
+  font-size: 12px;
+  padding: $space-1 $space-2;
+  background: #FFEBEE;
+  color: $danger;
+  border: 1px solid #FFCDD2;
+
+  &:hover { background: $danger; color: $white; }
+}

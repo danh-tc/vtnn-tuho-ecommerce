@@ -1,0 +1,365 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+
+// ============================================================
+// Hero Banner
+// ============================================================
+.rethink-hero-banner {
+  width: 100%;
+  overflow: hidden;
+}
+
+// ============================================================
+// Hero Banner Carousel
+// ============================================================
+@keyframes rethink-nav-progress {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+.rethink-hero-carousel {
+  position: relative;
+  width: 100%;
+  height: clamp(420px, 58vh, 640px);
+  overflow: hidden;
+
+  // ---- Slides ----
+  &__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    pointer-events: none;
+
+    &--active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  // ---- Dark gradient overlay ----
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.72) 0%,
+      rgba(0, 0, 0, 0.28) 55%,
+      rgba(0, 0, 0, 0.08) 100%
+    );
+    z-index: 1;
+  }
+
+  // ---- Text content ----
+  &__content {
+    position: absolute;
+    bottom: 100px; // above nav bar
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding: 0 clamp($space-5, 6vw, 80px);
+    color: $white;
+    max-width: 720px;
+
+    .rethink-hero-carousel__slide:not(.rethink-hero-carousel__slide--active) & {
+      opacity: 0;
+    }
+  }
+
+  &__eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-bottom: $space-3;
+  }
+
+  h1 {
+    font-size: clamp(26px, 4.5vw, 52px);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: $space-3;
+  }
+
+  &__subtitle {
+    font-size: clamp(14px, 1.6vw, 17px);
+    opacity: 0.88;
+    line-height: 1.65;
+    margin-bottom: $space-5;
+  }
+
+  &__cta {
+    display: inline-block;
+    background: $accent;
+    color: $primary-dark;
+    font-weight: 700;
+    font-size: 15px;
+    padding: $space-3 $space-6;
+    border-radius: $border-radius;
+    transition: $transition;
+
+    &:hover { background: darken(#8BC34A, 10%); }
+  }
+
+  // ---- Numbered progress nav ----
+  &__nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    display: flex;
+    padding: 0 clamp($space-5, 6vw, 80px) $space-5;
+    gap: $space-5;
+  }
+
+  &__nav-item {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    min-width: 48px;
+    transition: opacity 0.3s;
+    opacity: 0.5;
+
+    &--active { opacity: 1; }
+    &:hover:not(&--active) { opacity: 0.75; }
+  }
+
+  &__nav-num {
+    font-size: 13px;
+    font-weight: 700;
+    color: $white;
+    letter-spacing: 0.05em;
+  }
+
+  &__nav-bar {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: rgba($white, 0.3);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  &__nav-progress {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: $white;
+    border-radius: 2px;
+
+    .rethink-hero-carousel__nav-item--active & {
+      animation: rethink-nav-progress linear forwards;
+    }
+  }
+}
+
+// ============================================================
+// Trust bar
+// ============================================================
+.rethink-trust-bar {
+  background: $white;
+  border-bottom: 1px solid $border;
+
+  &__inner {
+    @include container;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-4;
+    padding-top: $space-4;
+    padding-bottom: $space-4;
+
+    @include md {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+
+    h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: $text-main;
+    }
+
+    p {
+      font-size: 12px;
+      color: $text-muted;
+    }
+  }
+
+  &__item-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+}
+
+// ============================================================
+// Home section
+// ============================================================
+.rethink-home-section {
+  padding: $space-7 0;
+}
+
+.rethink-section-header {
+  @include container;
+  @include flex-between;
+  margin-bottom: $space-5;
+
+  h2 {
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 900;
+    color: $text-main;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    position: relative;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 3px;
+      background: $accent-warm;
+      margin-top: $space-1;
+      border-radius: 2px;
+    }
+  }
+
+  a {
+    font-size: 13px;
+    color: $primary;
+    font-weight: 600;
+    border: 1.5px solid $primary;
+    padding: $space-1 $space-3;
+    border-radius: 99px;
+    transition: $transition;
+
+    &:hover {
+      background: $primary;
+      color: $white;
+    }
+  }
+}
+
+// ============================================================
+// Category grid
+// ============================================================
+.rethink-category-grid {
+  @include container;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-3;
+
+  @include sm {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include lg {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+.rethink-category-card {
+  @include card;
+  padding: $space-4 $space-3;
+  text-align: center;
+  transition: $transition;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-2;
+
+  &:hover {
+    border-color: $primary-light;
+    box-shadow: $shadow;
+    transform: translateY(-2px);
+  }
+
+  &__icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: $bg-light;
+    @include flex-center;
+    font-size: 28px;
+  }
+
+  &__name {
+    font-size: 13px;
+    font-weight: 600;
+    color: $text-main;
+    @include text-truncate(2);
+  }
+}
+
+// ============================================================
+// Product grid
+// ============================================================
+.rethink-product-grid {
+  @include container;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-3;
+
+  @include sm {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include lg {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+// ============================================================
+// Promo banner
+// ============================================================
+.rethink-promo-banner {
+  @include container;
+  background: linear-gradient(135deg, $warning 0%, #FF8F00 100%);
+  border-radius: $border-radius-lg;
+  padding: $space-6;
+  color: $white;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+
+  @include md {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  h3 {
+    font-size: 24px;
+    font-weight: 800;
+  }
+
+  p {
+    opacity: 0.9;
+    margin-top: $space-1;
+  }
+
+  &__btn {
+    @include btn-base;
+    background: $white;
+    color: $warning;
+    font-weight: 700;
+    padding: $space-3 $space-6;
+    border-radius: 99px;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    &:hover {
+      background: $primary-dark;
+      color: $white;
+    }
+  }
+}

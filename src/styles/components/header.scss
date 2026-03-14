@@ -1,0 +1,189 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.rethink-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: $white;
+  box-shadow: 0 1px 0 $border;
+
+  &__top-bar {
+    background: $primary;
+    padding: $space-1 0;
+    font-size: 13px;
+    color: rgba($white, 0.92);
+    display: none;
+
+    @include md {
+      display: block;
+    }
+  }
+
+  &__top-bar-inner {
+    @include container;
+    @include flex-between;
+  }
+
+  &__main {
+    @include container;
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+    height: $header-height;
+  }
+
+  &__logo {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+  }
+
+  &__logo-icon {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  &__logo-text {
+    font-size: 22px;
+    font-weight: 800;
+    color: $primary-dark;
+    line-height: 1;
+
+    span { color: $primary; }
+  }
+
+  &__logo-sub {
+    font-size: 10px;
+    color: $text-muted;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  &__search {
+    flex: 1;
+    max-width: 520px;
+    display: none;
+
+    @include lg {
+      display: flex;
+    }
+
+    form {
+      display: flex;
+      width: 100%;
+      border: 1.5px solid $border;
+      border-radius: $border-radius-sm;
+      overflow: hidden;
+      transition: border-color 0.2s;
+
+      &:focus-within { border-color: $primary; }
+    }
+
+    input {
+      flex: 1;
+      padding: $space-2 $space-3;
+      border: none;
+      font-size: 14px;
+      outline: none;
+      color: $text-main;
+
+      &::placeholder { color: $text-muted; }
+    }
+
+    button {
+      background: $primary;
+      border: none;
+      padding: 0 $space-4;
+      cursor: pointer;
+      color: $white;
+      transition: $transition;
+
+      &:hover { background: $primary-dark; }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    margin-left: auto;
+  }
+
+  &__action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    color: $text-main;
+    font-size: 11px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: $space-1 $space-2;
+    border-radius: $border-radius-sm;
+    transition: $transition;
+    text-decoration: none;
+
+    &:hover {
+      background: $bg-light;
+      color: $primary;
+    }
+  }
+
+  &__action-icon {
+    font-size: 22px;
+    position: relative;
+  }
+
+  &__cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background: $danger;
+    color: $white;
+    font-size: 10px;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+  }
+
+  &__nav {
+    background: $white;
+    border-top: 1px solid $border;
+  }
+
+  &__nav-inner {
+    @include container;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar { display: none; }
+  }
+
+  &__nav-link {
+    white-space: nowrap;
+    padding: $space-2 $space-4;
+    color: $text-muted;
+    font-size: 14px;
+    font-weight: 500;
+    transition: $transition;
+    border-bottom: 3px solid transparent;
+
+    &:hover,
+    &--active {
+      color: $primary;
+      border-bottom-color: $primary;
+    }
+  }
+}

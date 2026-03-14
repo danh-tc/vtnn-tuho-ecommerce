@@ -1,0 +1,354 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// Enums
+// ============================================================
+
+enum Role {
+  customer
+  staff
+  admin
+}
+
+enum OrderStatus {
+  pending
+  confirmed
+  processing
+  shipped
+  delivered
+  cancelled
+  refunded
+}
+
+enum PaymentMethod {
+  cod
+  bank_transfer
+  vnpay
+  momo
+}
+
+enum PaymentStatus {
+  pending
+  paid
+  failed
+  refunded
+}
+
+enum CouponType {
+  percent
+  fixed
+}
+
+enum BannerPosition {
+  hero
+  popup
+  category_top
+}
+
+enum NotificationType {
+  order_confirmed
+  order_shipped
+  order_delivered
+  promotion
+}
+
+// ============================================================
+// Users & Auth
+// ============================================================
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String
+  phone        String   @unique
+  email        String?  @unique
+  passwordHash String   @map("password_hash")
+  role         Role     @default(customer)
+  avatarUrl    String?  @map("avatar_url")
+  isActive     Boolean  @default(true) @map("is_active")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  addresses     Address[]
+  orders        Order[]
+  reviews       Review[]
+  notifications Notification[]
+  coupons       Coupon[]       @relation("PrivateCoupon")
+
+  @@map("users")
+}
+
+model Address {
+  id            Int     @id @default(autoincrement())
+  userId        Int     @map("user_id")
+  recipientName String  @map("recipient_name")
+  phone         String
+  provinceName  String  @map("province_name")
+  districtName  String  @map("district_name")
+  wardName      String  @map("ward_name")
+  street        String
+  isDefault     Boolean @default(false) @map("is_default")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("addresses")
+}
+
+// ============================================================
+// Products
+// ============================================================
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String
+  slug      String   @unique
+  parentId  Int?     @map("parent_id")
+  imageUrl  String?  @map("image_url")
+  sortOrder Int      @default(0) @map("sort_order")
+  isActive  Boolean  @default(true) @map("is_active")
+
+  parent   Category?  @relation("CategoryTree", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryTree")
+  products Product[]
+
+  @@map("categories")
+}
+
+model Brand {
+  id       Int     @id @default(autoincrement())
+  name     String  @unique
+  slug     String  @unique
+  logoUrl  String? @map("logo_url")
+  isActive Boolean @default(true) @map("is_active")
+
+  products Product[]
+
+  @@map("brands")
+}
+
+model Product {
+  id               Int      @id @default(autoincrement())
+  name             String
+  slug             String   @unique
+  description      String?  @db.Text
+  shortDescription String?  @map("short_description")
+  categoryId       Int      @map("category_id")
+  brandId          Int?     @map("brand_id")
+  isPublished      Boolean  @default(false) @map("is_published")
+  isFeatured       Boolean  @default(false) @map("is_featured")
+  seoTitle         String?  @map("seo_title")
+  seoDescription   String?  @map("seo_description")
+  tags             String[] @default([])
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  category Category        @relation(fields: [categoryId], references: [id])
+  brand    Brand?          @relation(fields: [brandId], references: [id])
+  variants ProductVariant[]
+  images   ProductImage[]
+  reviews  Review[]
+
+  @@map("products")
+}
+
+model ProductVariant {
+  id        Int     @id @default(autoincrement())
+  productId Int     @map("product_id")
+  name      String
+  sku       String  @unique
+  price     Int     // VND, no decimals
+  salePrice Int?    @map("sale_price")
+  stock     Int     @default(0)
+  weightG   Int?    @map("weight_g")
+  isDefault Boolean @default(false) @map("is_default")
+  sortOrder Int     @default(0) @map("sort_order")
+
+  product    Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
+  images     ProductImage[]
+  orderItems OrderItem[]
+
+  @@map("product_variants")
+}
+
+model ProductImage {
+  id        Int     @id @default(autoincrement())
+  productId Int     @map("product_id")
+  variantId Int?    @map("variant_id")
+  url       String
+  altText   String? @map("alt_text")
+  sortOrder Int     @default(0) @map("sort_order")
+  isPrimary Boolean @default(false) @map("is_primary")
+
+  product Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  variant ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+
+  @@map("product_images")
+}
+
+// ============================================================
+// Orders
+// ============================================================
+
+model Order {
+  id     Int    @id @default(autoincrement())
+  code   String @unique
+  userId Int?   @map("user_id")
+
+  status OrderStatus @default(pending)
+
+  // Shipping address snapshot (denormalized intentionally)
+  shippingName     String @map("shipping_name")
+  shippingPhone    String @map("shipping_phone")
+  shippingProvince String @map("shipping_province")
+  shippingDistrict String @map("shipping_district")
+  shippingWard     String @map("shipping_ward")
+  shippingStreet   String @map("shipping_street")
+
+  // Financials (VND)
+  subtotal       Int @default(0)
+  discountAmount Int @default(0) @map("discount_amount")
+  shippingFee    Int @default(0) @map("shipping_fee")
+  total          Int @default(0)
+
+  // Payment
+  paymentMethod PaymentMethod @map("payment_method")
+  paymentStatus PaymentStatus @default(pending) @map("payment_status")
+  couponCode    String?       @map("coupon_code")
+
+  note      String? @db.Text
+  adminNote String? @map("admin_note") @db.Text
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user     User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
+  items    OrderItem[]
+  payments Payment[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id        Int  @id @default(autoincrement())
+  orderId   Int  @map("order_id")
+  variantId Int? @map("variant_id")
+
+  // Price snapshots — never look up live prices for past orders
+  productName String @map("product_name")
+  variantName String @map("variant_name")
+  sku         String
+  unitPrice   Int    @map("unit_price")
+  quantity    Int
+  subtotal    Int
+
+  order   Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  variant ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+
+  @@map("order_items")
+}
+
+// ============================================================
+// Payments
+// ============================================================
+
+model Payment {
+  id                   Int           @id @default(autoincrement())
+  orderId              Int           @map("order_id")
+  method               PaymentMethod
+  amount               Int
+  gatewayTransactionId String?       @map("gateway_transaction_id")
+  gatewayResponse      Json?         @map("gateway_response")
+  status               PaymentStatus @default(pending)
+  paidAt               DateTime?     @map("paid_at")
+  createdAt            DateTime      @default(now()) @map("created_at")
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
+
+// ============================================================
+// Reviews
+// ============================================================
+
+model Review {
+  id         Int      @id @default(autoincrement())
+  productId  Int      @map("product_id")
+  userId     Int      @map("user_id")
+  orderId    Int      @map("order_id")
+  rating     Int      // 1–5
+  title      String?
+  body       String?  @db.Text
+  images     Json?    // array of Cloudinary URLs
+  isApproved Boolean  @default(false) @map("is_approved")
+  adminReply String?  @map("admin_reply") @db.Text
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, orderId, productId])
+  @@map("reviews")
+}
+
+// ============================================================
+// Promotions
+// ============================================================
+
+model Coupon {
+  id                Int        @id @default(autoincrement())
+  code              String     @unique
+  type              CouponType
+  value             Int        // percent: 10 = 10%, fixed: 50000 = 50,000đ
+  minOrderAmount    Int?       @map("min_order_amount")
+  maxDiscountAmount Int?       @map("max_discount_amount")
+  maxUses           Int?       @map("max_uses")
+  usesCount         Int        @default(0) @map("uses_count")
+  userId            Int?       @map("user_id") // null = public coupon
+  startsAt          DateTime?  @map("starts_at")
+  expiresAt         DateTime?  @map("expires_at")
+  isActive          Boolean    @default(true) @map("is_active")
+
+  user User? @relation("PrivateCoupon", fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("coupons")
+}
+
+model Banner {
+  id             Int            @id @default(autoincrement())
+  title          String
+  imageUrl       String         @map("image_url")
+  mobileImageUrl String?        @map("mobile_image_url")
+  link           String?
+  position       BannerPosition @default(hero)
+  sortOrder      Int            @default(0) @map("sort_order")
+  isActive       Boolean        @default(true) @map("is_active")
+  startsAt       DateTime?      @map("starts_at")
+  endsAt         DateTime?      @map("ends_at")
+
+  @@map("banners")
+}
+
+// ============================================================
+// Notifications
+// ============================================================
+
+model Notification {
+  id        Int              @id @default(autoincrement())
+  userId    Int              @map("user_id")
+  type      NotificationType
+  title     String
+  message   String
+  link      String?
+  isRead    Boolean          @default(false) @map("is_read")
+  createdAt DateTime         @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}

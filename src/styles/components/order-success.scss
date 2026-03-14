@@ -1,0 +1,91 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.rethink-order-success {
+  @include container;
+  padding-top: $space-8;
+  padding-bottom: $space-8;
+  @include flex-center;
+
+  &__card {
+    @include card;
+    max-width: 520px;
+    width: 100%;
+    padding: $space-7;
+    text-align: center;
+  }
+
+  &__icon {
+    font-size: 72px;
+    margin-bottom: $space-4;
+  }
+
+  &__title {
+    font-size: 28px;
+    font-weight: 800;
+    color: $primary-dark;
+    margin-bottom: $space-2;
+  }
+
+  &__code {
+    font-size: 16px;
+    color: $text-muted;
+    margin-bottom: $space-3;
+
+    strong {
+      color: $primary;
+      font-size: 18px;
+    }
+  }
+
+  &__message {
+    font-size: 15px;
+    color: $text-muted;
+    line-height: 1.7;
+    margin-bottom: $space-5;
+  }
+
+  &__info-box {
+    background: $bg-light;
+    border-radius: $border-radius;
+    padding: $space-4;
+    margin-bottom: $space-5;
+    text-align: left;
+
+    h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: $primary-dark;
+      margin-bottom: $space-2;
+    }
+
+    p {
+      font-size: 14px;
+      color: $text-muted;
+      margin-bottom: $space-1;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+
+    @include sm {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+
+  &__btn--primary {
+    @include btn-primary;
+    padding: $space-3 $space-5;
+    font-size: 15px;
+  }
+
+  &__btn--outline {
+    @include btn-outline;
+    padding: $space-3 $space-5;
+    font-size: 15px;
+  }
+}

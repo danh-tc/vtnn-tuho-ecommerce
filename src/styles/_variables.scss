@@ -1,0 +1,66 @@
+// ============================================================
+// Colors — Agricultural Green & White Theme
+// ============================================================
+$primary:        #2E7D32;   // Deep forest green
+$primary-light:  #4CAF50;   // Lighter green (hover)
+$primary-dark:   #1B5E20;   // Dark green (header, footer)
+$accent:         #8BC34A;   // Lime green (badges, highlights)
+$accent-warm:    #E07B45;   // Warm orange — section titles, highlights
+$white:          #FFFFFF;
+$bg-light:       #F8F9FA;   // Neutral off-white page background
+$bg-card:        #F9FBF9;   // Very subtle green tint for card bodies
+$text-main:      #1A1A1A;   // Near-black body text
+$text-muted:     #6B7280;   // Secondary/helper text
+$border:         #E5E7EB;   // Neutral gray borders
+$danger:         #D32F2F;   // Errors, out-of-stock
+$warning:        #F57F17;   // Promotions, flash sales
+$info:           #0288D1;
+
+// ============================================================
+// Typography
+// ============================================================
+$font-sans:   'Roboto', 'Be Vietnam Pro', 'Segoe UI', sans-serif;
+$font-size-base: 16px;
+$line-height-base: 1.6;
+
+// ============================================================
+// Spacing scale
+// ============================================================
+$space-1:  4px;
+$space-2:  8px;
+$space-3:  12px;
+$space-4:  16px;
+$space-5:  24px;
+$space-6:  32px;
+$space-7:  48px;
+$space-8:  64px;
+
+// ============================================================
+// Breakpoints
+// ============================================================
+$bp-sm:   576px;
+$bp-md:   768px;
+$bp-lg:   992px;
+$bp-xl:  1200px;
+$bp-xxl: 1400px;
+
+// ============================================================
+// Layout
+// ============================================================
+$container-max: 1320px;
+$header-height:  64px;
+$border-radius:   10px;
+$border-radius-sm: 6px;
+$border-radius-lg: 16px;
+
+// ============================================================
+// Shadows
+// ============================================================
+$shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+$shadow:    0 2px 8px rgba(0,0,0,0.12);
+$shadow-lg: 0 4px 20px rgba(0,0,0,0.16);
+
+// ============================================================
+// Transitions
+// ============================================================
+$transition: all 0.2s ease;
