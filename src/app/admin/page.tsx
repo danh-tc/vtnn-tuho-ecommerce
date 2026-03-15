@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/utils";
 import { LayoutDashboard } from "lucide-react";
+import Link from "next/link";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -110,7 +111,7 @@ export default async function AdminDashboard() {
       <div className="rethink-admin-table-card">
         <div className="rethink-admin-table-card__header">
           <h3>Đơn hàng gần đây</h3>
-          <a href="/admin/don-hang" className="rethink-admin-btn--add">Xem tất cả</a>
+          <Link href="/admin/don-hang" className="rethink-admin-btn--add">Xem tất cả</Link>
         </div>
         <div style={{ overflowX: "auto" }}>
           <table className="rethink-admin-table">
