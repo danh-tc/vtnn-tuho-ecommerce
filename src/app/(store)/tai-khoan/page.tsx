@@ -21,7 +21,7 @@ export default async function AccountPage() {
           <User size={40} />
         </div>
         <div>
-          <h1 className="rethink-account__name">{user.name}</h1>
+          <h1 className="rethink-account__name">{user.lastName} {user.name}</h1>
           <p className="rethink-account__role">{roleLabel}</p>
         </div>
       </div>

@@ -52,12 +52,9 @@
 .skeleton-hero {
   @extend %skeleton-base;
   width: 100%;
-  height: 220px;
+  height: clamp(420px, 58vh, 640px); // matches .rethink-hero-carousel height exactly
   border-radius: 0;
   margin-bottom: 32px;
-
-  @media (min-width: 768px) { height: 360px; }
-  @media (min-width: 1024px) { height: 420px; }
 }
 
 // ── Product card grid ────────────────────────────────────────

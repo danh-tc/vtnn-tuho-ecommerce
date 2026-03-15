@@ -78,8 +78,8 @@ export default function AdminSidebar({ userName }: { userName: string }) {
       <div className="rethink-admin-sidebar__footer">
         <p>{userName}</p>
         <button
+          className="rethink-admin-sidebar__signout-btn"
           onClick={() => signOut({ callbackUrl: "/dang-nhap" })}
-          style={{ background: "none", border: "none", color: "rgba(255,255,255,0.5)", cursor: "pointer", fontSize: 13, padding: 0, marginTop: 4 }}
         >
           Đăng xuất
         </button>

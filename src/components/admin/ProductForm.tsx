@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, Upload } from "lucide-react";
 import { slugify } from "@/lib/utils";
 import dynamic from "next/dynamic";
 
@@ -25,6 +25,7 @@ interface Variant {
 
 interface ImageRow {
   id?: number;
+  clientId?: string;
   url: string;
   altText: string;
   isPrimary: boolean;
@@ -51,7 +52,7 @@ interface ProductFormProps {
 }
 
 const EMPTY_VARIANT: Variant = { name: "", sku: "", price: "", salePrice: "", stock: "0", weightG: "", isDefault: false, sortOrder: 0 };
-const EMPTY_IMAGE: ImageRow = { url: "", altText: "", isPrimary: false, sortOrder: 0 };
+const EMPTY_IMAGE: ImageRow = { clientId: "", url: "", altText: "", isPrimary: false, sortOrder: 0 };
 
 export default function ProductForm({ productId, initialData, categories, brands }: ProductFormProps) {
   const router = useRouter();
@@ -67,9 +68,12 @@ export default function ProductForm({ productId, initialData, categories, brands
   const [isFeatured, setIsFeatured] = useState(initialData?.isFeatured ?? false);
   const [tags, setTags] = useState(initialData?.tags.join(", ") ?? "");
   const [variants, setVariants] = useState<Variant[]>(initialData?.variants ?? [{ ...EMPTY_VARIANT, isDefault: true }]);
-  const [images, setImages] = useState<ImageRow[]>(initialData?.images ?? []);
+  const [images, setImages] = useState<ImageRow[]>(
+    (initialData?.images ?? []).map((img) => ({ ...img, clientId: crypto.randomUUID() }))
+  );
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [uploadingSet, setUploadingSet] = useState<Set<number>>(new Set());
 
   // Auto-slug only when creating
   useEffect(() => {
@@ -87,13 +91,27 @@ export default function ProductForm({ productId, initialData, categories, brands
   }
 
   // Image helpers
-  function addImage() { setImages((imgs) => [...imgs, { ...EMPTY_IMAGE, sortOrder: imgs.length }]); }
+  function addImage() { setImages((imgs) => [...imgs, { ...EMPTY_IMAGE, clientId: crypto.randomUUID(), sortOrder: imgs.length }]); }
   function removeImage(i: number) { setImages((imgs) => imgs.filter((_, idx) => idx !== i)); }
   function updateImage(i: number, field: keyof ImageRow, value: string | boolean | number) {
     setImages((imgs) => imgs.map((row, idx) => idx === i ? { ...row, [field]: value } : row));
   }
   function setPrimaryImage(i: number) {
     setImages((imgs) => imgs.map((row, idx) => ({ ...row, isPrimary: idx === i })));
+  }
+
+  async function handleFileUpload(i: number, file: File) {
+    setUploadingSet((s) => new Set(s).add(i));
+    const formData = new FormData();
+    formData.append("file", file);
+    const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
+    const data = await res.json();
+    if (res.ok) {
+      updateImage(i, "url", data.url);
+    } else {
+      setError(data.error ?? "Upload ảnh thất bại");
+    }
+    setUploadingSet((s) => { const next = new Set(s); next.delete(i); return next; });
   }
 
   async function handleSubmit() {
@@ -158,8 +176,12 @@ export default function ProductForm({ productId, initialData, categories, brands
             <button className="rethink-admin-btn--delete" onClick={handleDelete}>Xóa sản phẩm</button>
           )}
           <button className="rethink-admin-btn--cancel" onClick={() => router.push("/admin/san-pham")}>Hủy</button>
-          <button className="rethink-admin-btn--add" onClick={handleSubmit} disabled={saving}>
-            {saving ? "Đang lưu..." : "Lưu sản phẩm"}
+          <button className="rethink-admin-btn--add" onClick={handleSubmit} disabled={saving || uploadingSet.size > 0}>
+            {(() => {
+              if (uploadingSet.size > 0) return "Đang upload ảnh...";
+              if (saving) return "Đang lưu...";
+              return "Lưu sản phẩm";
+            })()}
           </button>
         </div>
       </div>
@@ -257,42 +279,77 @@ export default function ProductForm({ productId, initialData, categories, brands
               </button>
             </div>
             <div className="rethink-admin-form-card__body">
-              {images.length === 0 && <p style={{ color: "#9E9E9E", fontSize: 14 }}>Chưa có ảnh. Nhập URL ảnh bên dưới.</p>}
-              {images.map((img, i) => (
-                <div key={i} className="rethink-admin-image-row">
-                  <div className="rethink-admin-image-row__preview">
-                    {img.url ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={img.url} alt={img.altText} style={{ width: 56, height: 56, objectFit: "cover", borderRadius: 4 }} />
-                    ) : (
-                      <div style={{ width: 56, height: 56, background: "#F5F5F5", borderRadius: 4 }} />
-                    )}
+              {images.length === 0 && <p style={{ color: "#9E9E9E", fontSize: 14 }}>Chưa có ảnh. Nhấn "Thêm ảnh" để bắt đầu.</p>}
+              {images.map((img, i) => {
+                const isUploading = uploadingSet.has(i);
+                let preview: React.ReactNode;
+                if (isUploading) {
+                  preview = <div style={{ width: 56, height: 56, background: "#F5F5F5", borderRadius: 4, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, color: "#9E9E9E" }}>...</div>;
+                } else if (img.url) {
+                  // eslint-disable-next-line @next/next/no-img-element
+                  preview = <img src={img.url} alt={img.altText} style={{ width: 56, height: 56, objectFit: "cover", borderRadius: 4 }} />;
+                } else {
+                  preview = <div style={{ width: 56, height: 56, background: "#F5F5F5", borderRadius: 4 }} />;
+                }
+                return (
+                  <div key={img.clientId} className="rethink-admin-image-row">
+                    <div className="rethink-admin-image-row__preview">
+                      {preview}
+                    </div>
+                    <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 6 }}>
+                      <div style={{ display: "flex", gap: 6 }}>
+                        <input
+                          className="rethink-admin-table-input"
+                          style={{ flex: 1 }}
+                          value={img.url}
+                          onChange={(e) => updateImage(i, "url", e.target.value)}
+                          placeholder="https://... hoặc upload file"
+                          disabled={isUploading}
+                        />
+                        <label
+                          htmlFor={`file-upload-${i}`}
+                          style={{
+                            display: "inline-flex", alignItems: "center", gap: 4, padding: "0 10px",
+                            background: isUploading ? "#E0E0E0" : "#F5F5F5", border: "1px solid #E0E0E0",
+                            borderRadius: 4, fontSize: 12, cursor: isUploading ? "not-allowed" : "pointer",
+                            color: "#616161", whiteSpace: "nowrap", height: "100%",
+                          }}
+                        >
+                          <Upload size={13} />
+                          {isUploading ? "Đang tải..." : "Upload"}
+                        </label>
+                        <input
+                          id={`file-upload-${i}`}
+                          type="file"
+                          accept="image/*"
+                          style={{ display: "none" }}
+                          disabled={isUploading}
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) handleFileUpload(i, file);
+                            e.target.value = "";
+                          }}
+                        />
+                      </div>
+                      <input
+                        className="rethink-admin-table-input"
+                        value={img.altText}
+                        onChange={(e) => updateImage(i, "altText", e.target.value)}
+                        placeholder="Mô tả ảnh (alt text)"
+                      />
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+                      <label style={{ fontSize: 12, color: "#616161" }}>
+                        <input type="radio" name="primary-image" checked={img.isPrimary} onChange={() => setPrimaryImage(i)} />
+                        {" "}Ảnh chính
+                      </label>
+                      <button className="rethink-admin-btn--delete" onClick={() => removeImage(i)} style={{ padding: "2px 6px" }}>
+                        <Trash2 size={13} />
+                      </button>
+                    </div>
                   </div>
-                  <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 6 }}>
-                    <input
-                      className="rethink-admin-table-input"
-                      value={img.url}
-                      onChange={(e) => updateImage(i, "url", e.target.value)}
-                      placeholder="https://..."
-                    />
-                    <input
-                      className="rethink-admin-table-input"
-                      value={img.altText}
-                      onChange={(e) => updateImage(i, "altText", e.target.value)}
-                      placeholder="Mô tả ảnh (alt text)"
-                    />
-                  </div>
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
-                    <label style={{ fontSize: 12, color: "#616161" }}>
-                      <input type="radio" name="primary-image" checked={img.isPrimary} onChange={() => setPrimaryImage(i)} />
-                      {" "}Ảnh chính
-                    </label>
-                    <button className="rethink-admin-btn--delete" onClick={() => removeImage(i)} style={{ padding: "2px 6px" }}>
-                      <Trash2 size={13} />
-                    </button>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

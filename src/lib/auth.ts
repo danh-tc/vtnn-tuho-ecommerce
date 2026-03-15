@@ -31,7 +31,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           where: { phone },
           select: {
             id: true,
-            name: true,
+            firstName: true,
+            lastName: true,
             phone: true,
             email: true,
             passwordHash: true,
@@ -48,7 +49,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         return {
           id: String(user.id),
-          name: user.name,
+          name: user.firstName,
+          lastName: user.lastName,
           email: user.email ?? undefined,
           phone: user.phone,
           role: user.role,
@@ -61,6 +63,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.lastName = (user as { lastName: string }).lastName;
         token.phone = (user as { phone: string }).phone;
         token.role = (user as { role: string }).role;
         token.avatarUrl = (user as { avatarUrl?: string }).avatarUrl;
@@ -69,6 +72,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     async session({ session, token }) {
       session.user.id = token.id as string;
+      session.user.lastName = token.lastName as string;
       session.user.phone = token.phone as string;
       session.user.role = token.role as string;
       session.user.avatarUrl = token.avatarUrl as string | undefined;

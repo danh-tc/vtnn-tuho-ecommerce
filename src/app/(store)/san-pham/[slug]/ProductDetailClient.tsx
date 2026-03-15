@@ -68,6 +68,7 @@ export default function ProductDetailClient({ product }: ProductDetailProps) {
     addItem({
       variantId: selectedVariant.id,
       productId: product.id,
+      productSlug: product.slug,
       productName: product.name,
       variantName: selectedVariant.name,
       sku: selectedVariant.sku,

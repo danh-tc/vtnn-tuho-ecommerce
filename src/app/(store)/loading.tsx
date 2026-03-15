@@ -3,7 +3,10 @@ const CARDS = ["a","b","c","d","e","f","g","h"];
 export default function StoreLoading() {
   return (
     <div className="skeleton-page">
-      <div className="skeleton-hero" />
+      {/* rethink-hero-banner triggers padding-top: 0 on store-main — same as real hero */}
+      <div className="rethink-hero-banner">
+        <div className="skeleton-hero" />
+      </div>
       <div className="skeleton-page__section">
         <div className="skeleton-heading" />
         <div className="skeleton-grid">

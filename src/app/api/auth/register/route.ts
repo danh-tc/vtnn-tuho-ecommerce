@@ -4,7 +4,8 @@ import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 
 const registerSchema = z.object({
-  name: z.string().min(2, "Tên ít nhất 2 ký tự").max(100),
+  firstName: z.string().min(1, "Vui lòng nhập tên").max(50),
+  lastName: z.string().min(1, "Vui lòng nhập họ").max(50),
   phone: z
     .string()
     .regex(/^(0|\+84)[3-9]\d{8}$/, "Số điện thoại không hợp lệ"),
@@ -22,7 +23,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const { name, phone, password } = parsed.data;
+  const { firstName, lastName, phone, password } = parsed.data;
 
   const existing = await prisma.user.findUnique({ where: { phone } });
   if (existing) {
@@ -35,7 +36,7 @@ export async function POST(req: Request) {
   const passwordHash = await bcrypt.hash(password, 12);
 
   await prisma.user.create({
-    data: { name, phone, passwordHash, role: "customer", isActive: true },
+    data: { firstName, lastName, phone, passwordHash, role: "customer", isActive: true },
   });
 
   return NextResponse.json({ ok: true }, { status: 201 });

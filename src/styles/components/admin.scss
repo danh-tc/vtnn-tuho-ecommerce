@@ -122,6 +122,18 @@
 
     @media (max-width: 768px) { display: none; }
   }
+
+  &__signout-btn {
+    background: none;
+    border: none;
+    color: rgba($white, 0.5);
+    cursor: pointer;
+    font-size: 13px;
+    padding: 0;
+    margin-top: 4px;
+
+    @include hover { color: rgba($white, 0.85); }
+  }
 }
 
 // ============================================================

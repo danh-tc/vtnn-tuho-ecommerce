@@ -66,7 +66,7 @@ export default function Header() {
         <div className="rethink-header__actions">
           <Link href={session ? "/tai-khoan" : "/dang-nhap"} className="rethink-header__action-btn">
             <span className="rethink-header__action-icon"><User size={20} /></span>
-            <span>{session ? session.user.name?.split(" ").pop() : "Tài khoản"}</span>
+            <span>{session ? session.user.name : "Tài khoản"}</span>
           </Link>
 
           <Link href="/gio-hang" className="rethink-header__action-btn">

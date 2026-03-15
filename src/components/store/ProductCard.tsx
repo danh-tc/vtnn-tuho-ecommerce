@@ -32,6 +32,7 @@ export default function ProductCard({ product }: { product: Product }) {
     addItem({
       variantId: product.variantId,
       productId: product.id,
+      productSlug: product.slug,
       productName: product.name,
       variantName: product.variantName,
       sku: product.sku,

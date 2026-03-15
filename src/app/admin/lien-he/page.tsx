@@ -120,14 +120,8 @@ export default async function AdminContactPage() {
                         <button
                           type="submit"
                           title={msg.isRead ? "Đánh dấu chưa xử lý" : "Đánh dấu đã xử lý"}
-                          style={{
-                            display: "inline-flex", alignItems: "center", gap: 6,
-                            padding: "5px 12px", borderRadius: 6,
-                            fontSize: 12, fontWeight: 600, cursor: "pointer", border: "none",
-                            background: msg.isRead ? "rgba(158,158,158,0.15)" : "rgba(46,125,50,0.12)",
-                            color: msg.isRead ? "#616161" : "#2E7D32",
-                            transition: "background 0.15s",
-                          }}
+                          className={msg.isRead ? "rethink-admin-btn--cancel" : "rethink-admin-btn--edit"}
+                          style={{ display: "inline-flex", alignItems: "center", gap: 6 }}
                         >
                           {msg.isRead
                             ? <><RotateCcw size={13} /> Mở lại</>

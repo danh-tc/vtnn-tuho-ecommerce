@@ -12,7 +12,8 @@ import "@/styles/components/auth.scss";
 
 const registerSchema = z
   .object({
-    name: z.string().min(2, "Tên ít nhất 2 ký tự"),
+    lastName: z.string().min(1, "Vui lòng nhập họ"),
+    firstName: z.string().min(1, "Vui lòng nhập tên"),
     phone: z
       .string()
       .regex(/^(0|\+84)[3-9]\d{8}$/, "Số điện thoại không hợp lệ"),
@@ -47,7 +48,8 @@ export default function RegisterPage() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        name: data.name,
+        firstName: data.firstName,
+        lastName: data.lastName,
         phone: data.phone,
         password: data.password,
       }),
@@ -87,21 +89,39 @@ export default function RegisterPage() {
             <div className="rethink-auth__server-error">{serverError}</div>
           )}
 
-          <div className="rethink-auth__form-group">
-            <label htmlFor="name">Họ và tên</label>
-            <div className="rethink-auth__input-wrap">
-              <User />
-              <input
-                id="name"
-                type="text"
-                placeholder="Nguyễn Văn A"
-                className={errors.name ? "error" : ""}
-                {...register("name")}
-              />
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+            <div className="rethink-auth__form-group">
+              <label htmlFor="lastName">Họ</label>
+              <div className="rethink-auth__input-wrap">
+                <User />
+                <input
+                  id="lastName"
+                  type="text"
+                  placeholder="Nguyễn"
+                  className={errors.lastName ? "error" : ""}
+                  {...register("lastName")}
+                />
+              </div>
+              {errors.lastName && (
+                <span className="rethink-auth__error-msg">{errors.lastName.message}</span>
+              )}
             </div>
-            {errors.name && (
-              <span className="rethink-auth__error-msg">{errors.name.message}</span>
-            )}
+            <div className="rethink-auth__form-group">
+              <label htmlFor="firstName">Tên</label>
+              <div className="rethink-auth__input-wrap">
+                <User />
+                <input
+                  id="firstName"
+                  type="text"
+                  placeholder="Văn A"
+                  className={errors.firstName ? "error" : ""}
+                  {...register("firstName")}
+                />
+              </div>
+              {errors.firstName && (
+                <span className="rethink-auth__error-msg">{errors.firstName.message}</span>
+              )}
+            </div>
           </div>
 
           <div className="rethink-auth__form-group">

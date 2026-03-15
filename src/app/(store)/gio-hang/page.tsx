@@ -48,7 +48,7 @@ export default function CartPage() {
               </div>
 
               <div className="rethink-cart__item-info">
-                <Link href={`/san-pham/${item.productId}`} className="rethink-cart__item-name">
+                <Link href={`/san-pham/${item.productSlug}`} className="rethink-cart__item-name">
                   {item.productName}
                 </Link>
                 <div className="rethink-cart__item-variant">{item.variantName}</div>
@@ -114,10 +114,10 @@ export default function CartPage() {
           </div>
 
           <Link href="/dat-hang" className="rethink-cart__checkout-btn">
-            Tiến hành đặt hàng <ArrowRight size={18} strokeWidth={2.5} />
+            Tiến hành đặt hàng 
           </Link>
           <Link href="/san-pham" className="rethink-cart__continue-shopping">
-            <ArrowLeft size={16} /> Tiếp tục mua sắm
+            Tiếp tục mua sắm
           </Link>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ShoppingCart, ClipboardList, Truck, CheckCircle } from "lucide-react";
+import { ShoppingCart, ClipboardList, Truck, CheckCircle, Phone } from "lucide-react";
 import "@/styles/components/policy.scss";
 
 export const metadata = {
@@ -125,7 +125,7 @@ export default function OrderGuidePage() {
         </ul>
 
         <div className="highlight-box">
-          <p>📞 Mọi thắc mắc về đơn hàng, liên hệ ngay hotline 098 99 77 884 - chúng tôi luôn sẵn sàng hỗ trợ bạn!</p>
+          <p><Phone size={15} style={{ display: "inline", verticalAlign: "middle", marginRight: 6 }} />Mọi thắc mắc về đơn hàng, liên hệ ngay hotline 098 99 77 884 - chúng tôi luôn sẵn sàng hỗ trợ bạn!</p>
         </div>
       </div>
     </div>

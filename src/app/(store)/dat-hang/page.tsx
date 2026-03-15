@@ -174,16 +174,17 @@ export default function CheckoutPage() {
               <h2><CreditCard size={18} style={{ display: "inline", verticalAlign: "middle", marginRight: 6 }} />Phương thức thanh toán</h2>
               <div className="rethink-checkout__payment-methods">
                 {[
-                  { value: "cod", label: "Thanh toán khi nhận hàng (COD)", desc: "Trả tiền mặt khi nhận hàng", icon: <Banknote size={20} /> },
-                  { value: "bank_transfer", label: "Chuyển khoản ngân hàng / QR", desc: "Quét mã VietQR hoặc chuyển khoản", icon: <Building2 size={20} /> },
-                  { value: "vnpay", label: "VNPay", desc: "Thẻ ATM, Visa, Mastercard qua VNPay", icon: <CreditCard size={20} /> },
-                  { value: "momo", label: "Ví MoMo", desc: "Thanh toán qua ứng dụng MoMo", icon: <Wallet size={20} /> },
+                  { value: "cod", label: "Thanh toán khi nhận hàng (COD)", desc: "Trả tiền mặt khi nhận hàng", icon: <Banknote size={20} />, disabled: false },
+                  { value: "bank_transfer", label: "Chuyển khoản ngân hàng / QR", desc: "Sắp ra mắt", icon: <Building2 size={20} />, disabled: true },
+                  { value: "vnpay", label: "VNPay", desc: "Sắp ra mắt", icon: <CreditCard size={20} />, disabled: true },
+                  { value: "momo", label: "Ví MoMo", desc: "Sắp ra mắt", icon: <Wallet size={20} />, disabled: true },
                 ].map((opt) => (
                   <label
                     key={opt.value}
-                    className={`rethink-checkout__payment-option${selectedPayment === opt.value ? " rethink-checkout__payment-option--selected" : ""}`}
+                    className={`rethink-checkout__payment-option${selectedPayment === opt.value ? " rethink-checkout__payment-option--selected" : ""}${opt.disabled ? " rethink-checkout__payment-option--disabled" : ""}`}
+                    style={opt.disabled ? { opacity: 0.45, cursor: "not-allowed" } : undefined}
                   >
-                    <input type="radio" value={opt.value} {...register("paymentMethod")} />
+                    <input type="radio" value={opt.value} {...register("paymentMethod")} disabled={opt.disabled} />
                     <div className="rethink-checkout__option-info">
                       <div className="rethink-checkout__option-label">{opt.label}</div>
                       <div className="rethink-checkout__option-desc">{opt.desc}</div>
