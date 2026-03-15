@@ -279,7 +279,7 @@ export default function ProductForm({ productId, initialData, categories, brands
               </button>
             </div>
             <div className="rethink-admin-form-card__body">
-              {images.length === 0 && <p style={{ color: "#9E9E9E", fontSize: 14 }}>Chưa có ảnh. Nhấn "Thêm ảnh" để bắt đầu.</p>}
+              {images.length === 0 && <p style={{ color: "#9E9E9E", fontSize: 14 }}>Chưa có ảnh. Nhấn &ldquo;Thêm ảnh&rdquo; để bắt đầu.</p>}
               {images.map((img, i) => {
                 const isUploading = uploadingSet.has(i);
                 let preview: React.ReactNode;
