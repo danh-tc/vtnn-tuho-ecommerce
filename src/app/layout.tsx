@@ -4,12 +4,12 @@ import Providers from "@/components/Providers";
 
 export const metadata: Metadata = {
   title: {
-    default: "VTNN Tư Hồ — Vật Tư Nông Nghiệp",
+    default: "VTNN Tư Hồ",
     template: "%s | VTNN Tư Hồ",
   },
   description: "Chuyên cung cấp vật tư nông nghiệp chất lượng cao: phân bón, thuốc bảo vệ thực vật, hạt giống và dụng cụ nông nghiệp.",
   keywords: ["vật tư nông nghiệp", "phân bón", "thuốc bảo vệ thực vật", "hạt giống", "nông nghiệp"],
-  icons: { icon: "/favicon.ico" },
+  icons: { icon: "/favicon.png" },
   openGraph: {
     type: "website",
     locale: "vi_VN",
