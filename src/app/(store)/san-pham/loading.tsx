@@ -1,18 +1,18 @@
+const CARDS = ["a","b","c","d","e","f","g","h","i"];
+
 export default function ProductsLoading() {
   return (
-    <div className="container" style={{ padding: "32px 16px" }}>
+    <div className="skeleton-page__section">
       <div className="skeleton-heading" />
-      <div style={{ display: "flex", gap: 24 }}>
-        {/* Sidebar skeleton */}
-        <div style={{ width: 220, flexShrink: 0 }}>
-          {Array.from({ length: 5 }).map((_, i) => (
-            <div key={i} className="skeleton-line" style={{ marginBottom: 12 }} />
+      <div className="skeleton-catalog">
+        <div className="skeleton-catalog__sidebar">
+          {["a","b","c","d","e"].map((k) => (
+            <div key={k} className="skeleton-line" style={{ marginBottom: 12 }} />
           ))}
         </div>
-        {/* Grid skeleton */}
-        <div className="skeleton-grid" style={{ flex: 1 }}>
-          {Array.from({ length: 9 }).map((_, i) => (
-            <div key={i} className="skeleton-card">
+        <div className="skeleton-grid">
+          {CARDS.map((k) => (
+            <div key={k} className="skeleton-card">
               <div className="skeleton-card__img" />
               <div className="skeleton-card__body">
                 <div className="skeleton-line skeleton-line--80" />

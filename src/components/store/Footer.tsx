@@ -15,9 +15,9 @@ export default function Footer() {
             hạt giống và dụng cụ nông nghiệp. Phục vụ bà con nông dân toàn quốc.
           </p>
           <div className="rethink-footer__brand-contact">
-            <span><Phone size={14} style={{ display: "inline", verticalAlign: "middle", marginRight: 6 }} />Hotline: 0123 456 789</span>
-            <span><Mail size={14} style={{ display: "inline", verticalAlign: "middle", marginRight: 6 }} />Email: vtnntuho@gmail.com</span>
-            <span><MapPin size={14} style={{ display: "inline", verticalAlign: "middle", marginRight: 6 }} />Địa chỉ: Tư Hồ, ...</span>
+            <span><Phone size={14} style={{ display: "inline", verticalAlign: "middle", marginRight: 6 }} />Hotline: 098 99 77 884</span>
+            <span><Mail size={14} style={{ display: "inline", verticalAlign: "middle", marginRight: 6 }} />Email: vtnntuho.2010@gmail.com</span>
+            <span><MapPin size={14} style={{ display: "inline", verticalAlign: "middle", marginRight: 6 }} />Địa chỉ: 98 Ấp Thạnh Lập, xã Thạnh Phú, huyện Thạnh Hóa, tỉnh Long An.</span>
           </div>
         </div>
 

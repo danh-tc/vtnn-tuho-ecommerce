@@ -41,7 +41,7 @@ export default function Header() {
       {/* Top bar */}
       <div className="rethink-header__top-bar">
         <div className="rethink-header__top-bar-inner">
-          <span><Phone size={13} style={{ display: "inline", verticalAlign: "middle", marginRight: 4 }} />Hotline: 0123 456 789 | Giao hàng toàn quốc</span>
+          <span><Phone size={13} style={{ display: "inline", verticalAlign: "middle", marginRight: 4 }} />Hotline: 098 99 77 884 | Giao hàng toàn quốc</span>
           <span>Thứ 2 – Thứ 7: 7:00 – 17:30</span>
         </div>
       </div>
