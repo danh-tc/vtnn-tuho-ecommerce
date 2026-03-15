@@ -12,7 +12,8 @@ async function main() {
     where: { phone: "0900000001" },
     update: {},
     create: {
-      name: "Admin VTNN",
+      firstName: "Admin",
+      lastName: "VTNN",
       phone: "0900000001",
       email: "admin@vtnntuho.vn",
       passwordHash: adminHash,

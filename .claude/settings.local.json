@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx prisma:*)"
+      "Bash(npx prisma:*)",
+      "Bash(taskkill /F /IM node.exe)",
+      "Bash(cmd /c \"taskkill /F /IM node.exe\")",
+      "Bash(cmd /c \"handle64 \"\"query_engine-windows.dll.node\"\" 2>&1 | head -5\")",
+      "Bash(cmd /c \"wmic process where \"\"name=''node.exe''\"\" get processid,commandline 2>&1\")",
+      "Bash(cmd /c \"del /F \"\"C:\\\\Users\\\\DANH Tran Cong\\\\Desktop\\\\vtnn-tuho-ecommerce\\\\node_modules\\\\.prisma\\\\client\\\\query_engine-windows.dll.node\"\" 2>&1\")"
     ]
   }
 }
