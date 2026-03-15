@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { ArrowRight } from 'lucide-react';
 
 interface BannerSlide {
   src: string;
@@ -19,13 +20,9 @@ interface Props {
 
 export default function HeroBannerImage({ slides, duration = 5000 }: Props) {
   const [current, setCurrent] = useState(0);
-  const [progressKey, setProgressKey] = useState(0);
   const touchStartX = useRef<number | null>(null);
 
-  const goTo = useCallback((index: number) => {
-    setCurrent(index);
-    setProgressKey((k) => k + 1);
-  }, []);
+  const goTo = useCallback((index: number) => setCurrent(index), []);
 
   const next = useCallback(() => {
     goTo((current + 1) % slides.length);
@@ -39,7 +36,7 @@ export default function HeroBannerImage({ slides, duration = 5000 }: Props) {
     if (slides.length <= 1) return;
     const id = setTimeout(next, duration);
     return () => clearTimeout(id);
-  }, [next, slides.length, duration, progressKey]);
+  }, [next, slides.length, duration]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -79,6 +76,7 @@ export default function HeroBannerImage({ slides, duration = 5000 }: Props) {
             {slide.cta && (
               <Link href={slide.cta.href} className="rethink-hero-carousel__cta">
                 {slide.cta.label}
+                <ArrowRight size={15} />
               </Link>
             )}
           </div>
@@ -97,13 +95,7 @@ export default function HeroBannerImage({ slides, duration = 5000 }: Props) {
               <span className="rethink-hero-carousel__nav-num">
                 {String(i + 1).padStart(2, '0')}
               </span>
-              <span className="rethink-hero-carousel__nav-bar">
-                <span
-                  key={i === current ? `active-${progressKey}` : `idle-${i}`}
-                  className="rethink-hero-carousel__nav-progress"
-                  style={i === current ? { animationDuration: `${duration}ms` } : undefined}
-                />
-              </span>
+              <span className="rethink-hero-carousel__nav-bar" />
             </button>
           ))}
         </div>

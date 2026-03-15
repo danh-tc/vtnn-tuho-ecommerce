@@ -105,21 +105,21 @@ export default async function HomePage() {
               alt: "Vật tư nông nghiệp chất lượng cao",
               title: "Vật tư nông nghiệp chất lượng cao",
               subtitle: "Phân bón, thuốc bảo vệ thực vật, hạt giống chính hãng — giao hàng toàn quốc.",
-              cta: { label: "Xem tất cả sản phẩm →", href: "/san-pham" },
+              cta: { label: "Xem tất cả sản phẩm", href: "/san-pham" },
             },
             {
               src: "/images/hero-2.jpg",
               alt: "Phân bón chính hãng giá tốt",
               title: "Phân bón chính hãng, giá tốt nhất",
               subtitle: "Cam kết hoàn tiền nếu hàng giả. Nguồn gốc rõ ràng, kiểm định đầy đủ.",
-              cta: { label: "Mua ngay →", href: "/san-pham?danh-muc=phan-bon" },
+              cta: { label: "Mua ngay", href: "/san-pham?danh-muc=phan-bon" },
             },
             {
               src: "/images/hero-3.jpg",
               alt: "Hạt giống và thuốc bảo vệ thực vật",
               title: "Hạt giống & thuốc bảo vệ thực vật",
               subtitle: "Đa dạng chủng loại, phù hợp mọi vùng canh tác. Tư vấn kỹ thuật miễn phí.",
-              cta: { label: "Liên hệ tư vấn →", href: "/lien-he" },
+              cta: { label: "Liên hệ tư vấn", href: "/lien-he" },
             },
           ]}
         />

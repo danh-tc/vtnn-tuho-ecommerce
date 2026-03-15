@@ -5,7 +5,7 @@ export default function StoreLayout({ children }: { children: React.ReactNode })
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main className="rethink-store-main">{children}</main>
       <Footer />
     </>
   );

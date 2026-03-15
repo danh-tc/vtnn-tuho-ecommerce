@@ -2,26 +2,68 @@
 @use '../mixins' as *;
 
 .rethink-catalog {
+  // Mobile: own container with vertical padding
   @include container;
   padding-top: $space-5;
   padding-bottom: $space-8;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: $space-5;
 
+  // Desktop: parent (.rethink-store-main) is the flex container + container mixin
   @include lg {
-    grid-template-columns: 240px 1fr;
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    flex: 1;
+    min-width: 0;
   }
 
   // ============================================================
-  // Sidebar
+  // Sidebar — rendered as sibling of .rethink-catalog in HTML
+  // (direct child of .rethink-store-main for sticky to work)
   // ============================================================
   &__sidebar {
     @include card;
     padding: $space-4;
-    height: fit-content;
-    position: sticky;
-    top: calc($header-height + $space-4);
+    // Mobile: match container horizontal spacing
+    margin: $space-5 $space-4 0;
+
+    @include md {
+      margin-left: $space-5;
+      margin-right: $space-5;
+    }
+
+    @include lg {
+      margin: 0;
+      width: 240px;
+      flex-shrink: 0;
+      position: sticky;
+      top: calc(var(--header-h, #{$header-total-md}) + #{$space-4});
+    }
+  }
+
+
+  &__filter-reset {
+    margin-bottom: $space-4;
+  }
+
+  &__reset-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: $space-2 $space-3;
+    font-size: 13px;
+    font-weight: 600;
+    color: $primary;
+    border: 1px solid $primary;
+    border-radius: $border-radius-sm;
+    transition: $transition;
+
+    &:hover {
+      background: $primary;
+      color: $white;
+    }
   }
 
   &__filter-group {

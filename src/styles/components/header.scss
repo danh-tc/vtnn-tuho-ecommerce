@@ -1,18 +1,93 @@
-@use '../variables' as *;
-@use '../mixins' as *;
+@use "../variables" as *;
+@use "../mixins" as *;
+
 
 .rethink-header {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 100;
+  left: 0;
+  right: 0;
+  z-index: 200;
   background: $white;
   box-shadow: 0 1px 0 $border;
+  transition:
+    background 0.38s ease,
+    box-shadow 0.38s ease;
 
+  // ================================================================
+  // Overlay mode — transparent, on top of hero banner
+  // ================================================================
+  &--overlay {
+    background: transparent;
+    box-shadow: none;
+
+    .rethink-header__top-bar {
+      display: none !important;
+    }
+
+    .rethink-header__logo-text {
+      color: $white;
+      span {
+        color: rgba($white, 0.78);
+      }
+    }
+    .rethink-header__logo-sub {
+      color: rgba($white, 0.6);
+    }
+
+    .rethink-header__search form {
+      border-color: rgba($white, 0.45);
+      background: rgba($white, 0.1);
+      backdrop-filter: blur(6px);
+      &:focus-within {
+        border-color: rgba($white, 0.85);
+      }
+    }
+    .rethink-header__search input {
+      background: transparent;
+      color: $white;
+      &::placeholder {
+        color: rgba($white, 0.6);
+      }
+    }
+    .rethink-header__search button {
+      background: rgba($white, 0.18);
+      color: $white;
+      &:hover {
+        background: rgba($white, 0.32);
+      }
+    }
+
+    .rethink-header__action-btn {
+      color: rgba($white, 0.9);
+      &:hover {
+        background: rgba($white, 0.12);
+        color: $white;
+      }
+    }
+
+    .rethink-header__nav {
+      background: transparent;
+      border-top-color: rgba($white, 0.14);
+    }
+    .rethink-header__nav-link {
+      color: rgba($white, 0.82);
+      &:hover,
+      &--active {
+        color: $white;
+        border-bottom-color: $white;
+      }
+    }
+  }
+
+  // ================================================================
+  // Top bar
+  // ================================================================
   &__top-bar {
-    background: $primary;
-    padding: $space-1 0;
-    font-size: 13px;
-    color: rgba($white, 0.92);
+    background: $primary-dark;
+    padding: 6px 0;
+    font-size: 12px;
+    color: rgba($white, 0.85);
     display: none;
 
     @include md {
@@ -25,6 +100,9 @@
     @include flex-between;
   }
 
+  // ================================================================
+  // Main row
+  // ================================================================
   &__main {
     @include container;
     display: flex;
@@ -33,11 +111,24 @@
     height: $header-height;
   }
 
+  // ================================================================
+  // Logo
+  // ================================================================
   &__logo {
     flex-shrink: 0;
     display: flex;
     align-items: center;
     gap: $space-2;
+    transition: opacity 0.2s;
+    &:hover {
+      opacity: 0.82;
+    }
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 
   &__logo-icon {
@@ -48,24 +139,32 @@
   }
 
   &__logo-text {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 800;
     color: $primary-dark;
-    line-height: 1;
-
-    span { color: $primary; }
+    line-height: 1.1;
+    transition: color 0.38s;
+    span {
+      color: $primary;
+      transition: color 0.38s;
+    }
   }
 
   &__logo-sub {
     font-size: 10px;
     color: $text-muted;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.2px;
+    transition: color 0.38s;
+    text-align: center;
   }
 
+  // ================================================================
+  // Search
+  // ================================================================
   &__search {
     flex: 1;
-    max-width: 520px;
+    max-width: 500px;
     display: none;
 
     @include lg {
@@ -76,22 +175,31 @@
       display: flex;
       width: 100%;
       border: 1.5px solid $border;
-      border-radius: $border-radius-sm;
+      border-radius: 99px;
       overflow: hidden;
-      transition: border-color 0.2s;
-
-      &:focus-within { border-color: $primary; }
+      background: $white;
+      transition:
+        border-color 0.2s,
+        background 0.38s,
+        backdrop-filter 0.38s;
+      &:focus-within {
+        border-color: $primary;
+      }
     }
 
     input {
       flex: 1;
-      padding: $space-2 $space-3;
+      padding: 9px $space-4;
       border: none;
       font-size: 14px;
       outline: none;
+      background: transparent;
       color: $text-main;
-
-      &::placeholder { color: $text-muted; }
+      transition: color 0.38s;
+      &::placeholder {
+        color: $text-muted;
+        transition: color 0.38s;
+      }
     }
 
     button {
@@ -100,17 +208,23 @@
       padding: 0 $space-4;
       cursor: pointer;
       color: $white;
-      transition: $transition;
-
-      &:hover { background: $primary-dark; }
+      border-radius: 0 99px 99px 0;
+      transition: background 0.2s;
+      &:hover {
+        background: $primary-dark;
+      }
     }
   }
 
+  // ================================================================
+  // Action buttons
+  // ================================================================
   &__actions {
     display: flex;
     align-items: center;
-    gap: $space-2;
+    gap: 2px;
     margin-left: auto;
+    flex-shrink: 0;
   }
 
   &__action-btn {
@@ -120,12 +234,15 @@
     gap: 2px;
     color: $text-main;
     font-size: 11px;
+    font-weight: 500;
     cursor: pointer;
     background: none;
     border: none;
-    padding: $space-1 $space-2;
-    border-radius: $border-radius-sm;
-    transition: $transition;
+    padding: $space-1 $space-3;
+    border-radius: $border-radius;
+    transition:
+      background 0.2s,
+      color 0.2s;
     text-decoration: none;
 
     &:hover {
@@ -135,30 +252,36 @@
   }
 
   &__action-icon {
-    font-size: 22px;
     position: relative;
+    line-height: 1;
   }
 
   &__cart-badge {
     position: absolute;
-    top: -6px;
+    top: -5px;
     right: -8px;
     background: $danger;
     color: $white;
     font-size: 10px;
     font-weight: 700;
-    min-width: 18px;
-    height: 18px;
+    min-width: 17px;
+    height: 17px;
     border-radius: 9px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 4px;
+    padding: 0 3px;
   }
 
+  // ================================================================
+  // Category nav
+  // ================================================================
   &__nav {
     background: $white;
     border-top: 1px solid $border;
+    transition:
+      background 0.38s,
+      border-top-color 0.38s;
   }
 
   &__nav-inner {
@@ -167,23 +290,49 @@
     gap: 0;
     overflow-x: auto;
     scrollbar-width: none;
-
-    &::-webkit-scrollbar { display: none; }
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   &__nav-link {
     white-space: nowrap;
-    padding: $space-2 $space-4;
+    padding: 10px $space-4;
     color: $text-muted;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
-    transition: $transition;
-    border-bottom: 3px solid transparent;
+    border-bottom: 2px solid transparent;
+    transition:
+      color 0.2s,
+      border-bottom-color 0.2s;
 
     &:hover,
     &--active {
       color: $primary;
       border-bottom-color: $primary;
+    }
+  }
+}
+
+// ================================================================
+// Store layout main — padding to clear fixed header
+// ================================================================
+.rethink-store-main {
+  padding-top: var(--header-h, #{$header-total});
+
+  // Hero page: hero extends behind the fixed header
+  &:has(.rethink-hero-banner) {
+    padding-top: 0;
+  }
+
+  // Catalog page: sidebar is a direct child of main so this element
+  // becomes the flex containing block — sticky can span full page height
+  &:has(.rethink-catalog__sidebar) {
+    @include lg {
+      @include container;
+      display: flex;
+      align-items: flex-start;
+      gap: $space-5;
     }
   }
 }

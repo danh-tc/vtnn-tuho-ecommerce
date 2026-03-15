@@ -73,6 +73,7 @@ $warning:       #F57F17   // Promotions
 ### Phase 3 — Backend APIs
 - [x] **POST `/api/orders`** — creates order, reduces stock atomically (Prisma transaction), creates payment record
 - [x] **GET/POST `/api/auth/[...nextauth]`** — NextAuth handlers
+- [x] **Login Page** (`/dang-nhap`) — phone + password, show/hide password, error messages, redirect after login
 
 ### Phase 4 — Admin Dashboard
 - [x] **Admin Layout** — sidebar nav (Dashboard, Products, Categories, Orders, Customers, Promotions, Banners, Reports)
@@ -86,7 +87,7 @@ $warning:       #F57F17   // Promotions
 ## ❌ Not Yet Done
 
 ### Auth Pages
-- [ ] Login page (`/dang-nhap`) — phone + password form
+- [x] Login page (`/dang-nhap`) — phone + password form
 - [ ] Register page (`/dang-ky`) — name, phone, password
 - [ ] Forgot password / OTP via SMS (ESMS.vn)
 

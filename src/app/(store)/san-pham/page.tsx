@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Leaf } from "lucide-react";
+import AutoSubmitSelect from "@/components/ui/AutoSubmitSelect";
 import { prisma } from "@/lib/prisma";
 import ProductCard from "@/components/store/ProductCard";
 import type { Metadata } from "next";
@@ -124,6 +125,12 @@ export default async function CatalogPage({
 
   const activeCategory = resolvedSearchParams["danh-muc"];
   const currentSort = resolvedSearchParams["sap-xep"] ?? "moi-nhat";
+  const hasActiveFilters = !!(
+    activeCategory ||
+    resolvedSearchParams["gia-tu"] ||
+    resolvedSearchParams["gia-den"] ||
+    resolvedSearchParams.q
+  );
 
   function buildUrl(overrides: Record<string, string | undefined>) {
     const p = { ...resolvedSearchParams, ...overrides };
@@ -135,9 +142,18 @@ export default async function CatalogPage({
   }
 
   return (
-    <div className="rethink-catalog">
-      {/* Sidebar */}
+    <>
+      {/* Sidebar — sibling of catalog so .rethink-store-main is the sticky containing block */}
       <aside className="rethink-catalog__sidebar">
+        {/* Reset filters */}
+        {hasActiveFilters && (
+          <div className="rethink-catalog__filter-reset">
+            <Link href="/san-pham" className="rethink-catalog__reset-btn">
+              Xóa bộ lọc
+            </Link>
+          </div>
+        )}
+
         {/* Categories */}
         <div className="rethink-catalog__filter-group">
           <h3>Danh mục</h3>
@@ -151,7 +167,7 @@ export default async function CatalogPage({
             {categories.map((cat) => (
               <Link
                 key={cat.id}
-                href={buildUrl({ "danh-muc": cat.slug, trang: undefined })}
+                href={buildUrl({ "danh-muc": cat.slug, trang: undefined, "gia-tu": undefined, "gia-den": undefined })}
                 className={`rethink-catalog__category-item${activeCategory === cat.slug ? " rethink-catalog__category-item--active" : ""}`}
               >
                 {cat.name}
@@ -171,7 +187,7 @@ export default async function CatalogPage({
                 name="gia-tu"
                 type="number"
                 placeholder="Từ"
-                defaultValue={searchParams["gia-tu"]}
+                defaultValue={resolvedSearchParams["gia-tu"]}
                 min={0}
               />
               <span>—</span>
@@ -179,7 +195,7 @@ export default async function CatalogPage({
                 name="gia-den"
                 type="number"
                 placeholder="Đến"
-                defaultValue={searchParams["gia-den"]}
+                defaultValue={resolvedSearchParams["gia-den"]}
                 min={0}
               />
             </div>
@@ -189,26 +205,26 @@ export default async function CatalogPage({
       </aside>
 
       {/* Main */}
-      <div className="rethink-catalog__main">
+      <div className="rethink-catalog">
+        <div className="rethink-catalog__main">
         {/* Toolbar */}
         <div className="rethink-catalog__toolbar">
           <p className="rethink-catalog__result-count">
             Tìm thấy <strong>{total}</strong> sản phẩm
-            {searchParams.q && <> cho &ldquo;{searchParams.q}&rdquo;</>}
+            {resolvedSearchParams.q && <> cho &ldquo;{resolvedSearchParams.q}&rdquo;</>}
           </p>
           <form method="GET" action="/san-pham">
             {activeCategory && <input type="hidden" name="danh-muc" value={activeCategory} />}
-            {searchParams.q && <input type="hidden" name="q" value={searchParams.q} />}
-            <select
+            {resolvedSearchParams.q && <input type="hidden" name="q" value={resolvedSearchParams.q} />}
+            <AutoSubmitSelect
               name="sap-xep"
               className="rethink-catalog__sort-select"
               defaultValue={currentSort}
-              onChange={(e) => (e.target.form as HTMLFormElement)?.submit()}
             >
               <option value="moi-nhat">Mới nhất</option>
               <option value="gia-tang">Giá tăng dần</option>
               <option value="gia-giam">Giá giảm dần</option>
-            </select>
+            </AutoSubmitSelect>
           </form>
         </div>
 
@@ -255,7 +271,8 @@ export default async function CatalogPage({
             </Link>
           </div>
         )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -335,6 +335,156 @@
   &:hover { background: $primary; color: $white; }
 }
 
+// ============================================================
+// Admin forms
+// ============================================================
+.rethink-admin-form-card {
+  background: $white;
+  border-radius: $border-radius;
+  box-shadow: $shadow-sm;
+  overflow: hidden;
+  margin-bottom: $space-4;
+
+  &__header {
+    padding: $space-4 $space-5;
+    border-bottom: 1px solid #F0F0F0;
+    @include flex-between;
+
+    h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: $text-main;
+    }
+  }
+
+  &__body {
+    padding: $space-5;
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  &__footer {
+    padding: $space-4 $space-5;
+    border-top: 1px solid #F0F0F0;
+    display: flex;
+    justify-content: flex-end;
+    gap: $space-3;
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: $text-muted;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    &:hover { color: $danger; }
+  }
+
+  &__error {
+    margin: $space-3 $space-5 0;
+    padding: $space-3 $space-4;
+    background: rgba($danger, 0.08);
+    border: 1px solid rgba($danger, 0.2);
+    border-radius: $border-radius-sm;
+    color: $danger;
+    font-size: 13px;
+  }
+}
+
+.rethink-admin-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-4;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rethink-admin-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+
+  label {
+    font-size: 13px;
+    font-weight: 600;
+    color: $text-main;
+  }
+
+  input, select, textarea {
+    @include input-base;
+    font-size: 14px;
+  }
+
+  textarea { resize: vertical; }
+}
+
+.rethink-admin-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: 14px;
+  color: $text-main;
+  cursor: pointer;
+
+  input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: $primary;
+    cursor: pointer;
+  }
+}
+
+.rethink-admin-btn--cancel {
+  @include btn-base;
+  font-size: 13px;
+  padding: $space-2 $space-4;
+  background: $white;
+  color: $text-muted;
+  border: 1px solid $border;
+
+  &:hover { border-color: $text-muted; color: $text-main; }
+}
+
+.rethink-admin-table-input {
+  @include input-base;
+  font-size: 13px;
+  padding: $space-1 $space-2;
+  min-width: 80px;
+}
+
+// Product create/edit layout
+.rethink-admin-product-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: $space-4;
+  align-items: start;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rethink-admin-product-main { min-width: 0; }
+.rethink-admin-product-sidebar { min-width: 0; }
+
+// Image rows
+.rethink-admin-image-row {
+  display: flex;
+  gap: $space-3;
+  align-items: flex-start;
+  padding: $space-3 0;
+  border-bottom: 1px solid #F5F5F5;
+
+  &:last-child { border-bottom: none; }
+
+  &__preview { flex-shrink: 0; }
+}
+
 .rethink-admin-btn--delete {
   @include btn-base;
   font-size: 12px;

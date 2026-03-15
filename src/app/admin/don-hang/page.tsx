@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import AutoSubmitSelect from "@/components/ui/AutoSubmitSelect";
 import { formatPrice } from "@/lib/utils";
 import { ShoppingCart } from "lucide-react";
 import type { Metadata } from "next";
@@ -32,9 +33,9 @@ interface SearchParams {
   q?: string;
 }
 
-export default async function AdminOrdersPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+export default async function AdminOrdersPage({ searchParams }: Readonly<{ searchParams: Promise<SearchParams> }>) {
   const { trang, status, q } = await searchParams;
-  const page = parseInt(trang ?? "1");
+  const page = Number.parseInt(trang ?? "1");
   const skip = (page - 1) * PAGE_SIZE;
 
   const where = {
@@ -89,10 +90,9 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
               />
             </form>
             <form method="GET">
-              <select
+              <AutoSubmitSelect
                 name="status"
                 defaultValue={status ?? ""}
-                onChange={(e) => (e.target.form as HTMLFormElement)?.submit()}
                 className="rethink-admin-search-input"
                 style={{ width: "auto" }}
               >
@@ -100,7 +100,7 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
                 {Object.entries(STATUS_LABELS).map(([val, label]) => (
                   <option key={val} value={val}>{label}</option>
                 ))}
-              </select>
+              </AutoSubmitSelect>
             </form>
           </div>
         </div>

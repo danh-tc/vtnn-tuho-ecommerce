@@ -4,12 +4,40 @@ import Link from "next/link";
 import Image from "next/image";
 import { Phone, Search, User, ShoppingCart, Flame } from "lucide-react";
 import { useCartStore } from "@/store/cart";
+import { usePathname } from "next/navigation";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
+import { useSession } from "next-auth/react";
 
 export default function Header() {
   const cartCount = useCartStore((s) => s.totalItems());
+  const pathname = usePathname();
+  const { data: session } = useSession();
+  const [scrolled, setScrolled] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  const isHeroPage = pathname === "/";
+  const isOverlay = isHeroPage && !scrolled;
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 72);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Set --header-h CSS var to the real rendered height — runs before paint
+  useLayoutEffect(() => {
+    const update = () => {
+      if (!headerRef.current) return;
+      document.documentElement.style.setProperty("--header-h", `${headerRef.current.offsetHeight}px`);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, [isOverlay]); // re-measure when top bar appears/disappears
 
   return (
-    <header className="rethink-header">
+    <header ref={headerRef} className={`rethink-header${isOverlay ? " rethink-header--overlay" : ""}`}>
       {/* Top bar */}
       <div className="rethink-header__top-bar">
         <div className="rethink-header__top-bar-inner">
@@ -20,18 +48,15 @@ export default function Header() {
 
       {/* Main header */}
       <div className="rethink-header__main">
-        {/* Logo */}
         <Link href="/" className="rethink-header__logo">
-          <Image src="/favicon.ico" alt="VTNN Tư Hồ" width={36} height={36} className="rethink-header__logo-icon" />
           <div>
             <div className="rethink-header__logo-text">
               VTNN <span>Tư Hồ</span>
             </div>
-            <div className="rethink-header__logo-sub">Vật tư nông nghiệp</div>
+            <div className="rethink-header__logo-sub">Đồng hành cùng nhà nông</div>
           </div>
         </Link>
 
-        {/* Search */}
         <div className="rethink-header__search">
           <form action="/san-pham" method="GET">
             <input
@@ -46,16 +71,15 @@ export default function Header() {
           </form>
         </div>
 
-        {/* Actions */}
         <div className="rethink-header__actions">
-          <Link href="/dang-nhap" className="rethink-header__action-btn">
-            <span className="rethink-header__action-icon"><User size={22} /></span>
-            <span>Tài khoản</span>
+          <Link href={session ? "/tai-khoan" : "/dang-nhap"} className="rethink-header__action-btn">
+            <span className="rethink-header__action-icon"><User size={20} /></span>
+            <span>{session ? session.user.name?.split(" ").pop() : "Tài khoản"}</span>
           </Link>
 
           <Link href="/gio-hang" className="rethink-header__action-btn">
             <span className="rethink-header__action-icon">
-              <ShoppingCart size={22} />
+              <ShoppingCart size={20} />
               {cartCount > 0 && (
                 <span className="rethink-header__cart-badge">{cartCount > 99 ? "99+" : cartCount}</span>
               )}
@@ -73,7 +97,9 @@ export default function Header() {
           <Link href="/san-pham?danh-muc=thuoc-bvtv" className="rethink-header__nav-link">Thuốc BVTV</Link>
           <Link href="/san-pham?danh-muc=hat-giong" className="rethink-header__nav-link">Hạt giống</Link>
           <Link href="/san-pham?danh-muc=dung-cu" className="rethink-header__nav-link">Dụng cụ nông nghiệp</Link>
-          <Link href="/khuyen-mai" className="rethink-header__nav-link"><Flame size={14} style={{ display: "inline", verticalAlign: "middle", marginRight: 3 }} />Khuyến mãi</Link>
+          <Link href="/khuyen-mai" className="rethink-header__nav-link">
+            <Flame size={13} style={{ display: "inline", verticalAlign: "middle", marginRight: 3 }} />Khuyến mãi
+          </Link>
         </div>
       </nav>
     </header>

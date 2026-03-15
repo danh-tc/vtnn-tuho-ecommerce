@@ -44,7 +44,7 @@ export default function ProductCard({ product }: { product: Product }) {
     <Link href={`/san-pham/${product.slug}`} className="rethink-product-card">
       <div className="rethink-product-card__image">
         <Image
-          src={product.primaryImage || "/placeholder-product.png"}
+          src={product.primaryImage || "/images/placeholder-product.png"}
           alt={product.name}
           fill
           sizes="(max-width: 576px) 50vw, (max-width: 992px) 33vw, 25vw"

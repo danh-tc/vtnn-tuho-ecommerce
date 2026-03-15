@@ -48,7 +48,12 @@ $bp-xxl: 1400px;
 // Layout
 // ============================================================
 $container-max: 1320px;
-$header-height:  64px;
+$header-height:       64px;
+$header-nav-height:   44px;
+$header-topbar-height: 32px;
+// Total fixed header height (used for sticky offsets)
+$header-total:    calc(#{$header-height} + #{$header-nav-height});           // 108px — mobile
+$header-total-md: calc(#{$header-height} + #{$header-nav-height} + #{$header-topbar-height}); // 140px — desktop
 $border-radius:   10px;
 $border-radius-sm: 6px;
 $border-radius-lg: 16px;
