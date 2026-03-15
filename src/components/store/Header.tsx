@@ -13,10 +13,13 @@ export default function Header() {
   const pathname = usePathname();
   const { data: session } = useSession();
   const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
 
   const isHeroPage = pathname === "/";
   const isOverlay = isHeroPage && !scrolled;
+
+  useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 72);
@@ -80,7 +83,7 @@ export default function Header() {
           <Link href="/gio-hang" className="rethink-header__action-btn">
             <span className="rethink-header__action-icon">
               <ShoppingCart size={20} />
-              {cartCount > 0 && (
+              {mounted && cartCount > 0 && (
                 <span className="rethink-header__cart-badge">{cartCount > 99 ? "99+" : cartCount}</span>
               )}
             </span>
