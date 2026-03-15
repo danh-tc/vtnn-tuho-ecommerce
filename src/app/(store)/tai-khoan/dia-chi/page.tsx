@@ -12,33 +12,77 @@ export default async function AddressPage() {
   const session = await auth();
   if (!session) redirect("/dang-nhap?from=tai-khoan/dia-chi");
 
-  const userId = parseInt(session.user.id);
+  const userId = Number.parseInt(session.user.id);
 
-  // Collect unique shipping addresses from past orders
-  const orders = await prisma.order.findMany({
+  // Try Address table first
+  const addressRows = await prisma.address.findMany({
     where: { userId },
-    orderBy: { createdAt: "desc" },
-    select: {
-      id: true,
-      code: true,
-      createdAt: true,
-      shippingName: true,
-      shippingPhone: true,
-      shippingStreet: true,
-      shippingWard: true,
-      shippingDistrict: true,
-      shippingProvince: true,
-    },
+    orderBy: [{ isDefault: "desc" }, { id: "asc" }],
   });
 
-  // Deduplicate by full address string
-  const seen = new Set<string>();
-  const uniqueAddresses = orders.filter((o) => {
-    const key = [o.shippingStreet, o.shippingWard, o.shippingDistrict, o.shippingProvince].join("|");
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
+  type DisplayAddress = {
+    key: string;
+    recipientName: string;
+    phone: string;
+    street: string;
+    wardName: string;
+    districtName: string;
+    provinceName: string;
+    isDefault: boolean;
+    meta?: string;
+  };
+
+  let displayAddresses: DisplayAddress[] = [];
+
+  if (addressRows.length > 0) {
+    displayAddresses = addressRows.map((a) => ({
+      key: String(a.id),
+      recipientName: a.recipientName,
+      phone: a.phone,
+      street: a.street,
+      wardName: a.wardName,
+      districtName: a.districtName,
+      provinceName: a.provinceName,
+      isDefault: a.isDefault,
+    }));
+  } else {
+    // Fallback: deduplicate from order history
+    const orders = await prisma.order.findMany({
+      where: { userId },
+      orderBy: { createdAt: "desc" },
+      select: {
+        id: true,
+        code: true,
+        createdAt: true,
+        shippingName: true,
+        shippingPhone: true,
+        shippingStreet: true,
+        shippingWard: true,
+        shippingDistrict: true,
+        shippingProvince: true,
+      },
+    });
+
+    const seen = new Set<string>();
+    displayAddresses = orders
+      .filter((o) => {
+        const key = [o.shippingStreet, o.shippingWard, o.shippingDistrict, o.shippingProvince].join("|");
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      })
+      .map((o) => ({
+        key: String(o.id),
+        recipientName: o.shippingName,
+        phone: o.shippingPhone,
+        street: o.shippingStreet,
+        wardName: o.shippingWard,
+        districtName: o.shippingDistrict,
+        provinceName: o.shippingProvince,
+        isDefault: false,
+        meta: `Dùng lần cuối: ${new Date(o.createdAt).toLocaleDateString("vi-VN")} · Đơn #${o.code}`,
+      }));
+  }
 
   return (
     <div className="rethink-address">
@@ -51,7 +95,7 @@ export default async function AddressPage() {
         </Link>
       </div>
 
-      {uniqueAddresses.length === 0 ? (
+      {displayAddresses.length === 0 ? (
         <div className="rethink-address__empty">
           <Package size={56} />
           <h2>Chưa có địa chỉ nào</h2>
@@ -60,17 +104,24 @@ export default async function AddressPage() {
         </div>
       ) : (
         <div className="rethink-address__list">
-          {uniqueAddresses.map((addr) => (
-            <div key={addr.id} className="rethink-address__card">
+          {displayAddresses.map((addr) => (
+            <div key={addr.key} className="rethink-address__card">
               <MapPin size={18} />
               <div className="rethink-address__info">
-                <strong>{addr.shippingName} · {addr.shippingPhone}</strong>
-                <p>
-                  {addr.shippingStreet}, {addr.shippingWard}, {addr.shippingDistrict}, {addr.shippingProvince}
-                </p>
-                <span className="rethink-address__meta">
-                  Dùng lần cuối: {new Date(addr.createdAt).toLocaleDateString("vi-VN")} · Đơn #{addr.code}
-                </span>
+                <strong>
+                  {addr.recipientName} · {addr.phone}
+                  {addr.isDefault && (
+                    <span style={{
+                      marginLeft: 8, fontSize: 11, fontWeight: 700,
+                      background: "#E8F5E9", color: "#2E7D32",
+                      padding: "1px 6px", borderRadius: 4,
+                    }}>
+                      Mặc định
+                    </span>
+                  )}
+                </strong>
+                <p>{addr.street}, {addr.wardName}, {addr.districtName}, {addr.provinceName}</p>
+                {addr.meta && <span className="rethink-address__meta">{addr.meta}</span>}
               </div>
             </div>
           ))}

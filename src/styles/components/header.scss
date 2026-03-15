@@ -225,15 +225,17 @@
     }
 
     button {
-      background: $primary;
+      background: $white;
       border: none;
+      border-left: 1px solid $border;
       padding: 0 $space-4;
       cursor: pointer;
-      color: $white;
+      color: $primary;
       border-radius: 0 99px 99px 0;
-      transition: background 0.2s;
+      transition: background 0.2s, color 0.2s;
       @include hover {
-        background: $primary-dark;
+        background: $bg-light;
+        color: $primary-dark;
       }
     }
   }

@@ -325,12 +325,15 @@
   font-size: 12px;
   font-weight: 600;
 
-  &--pending   { background: #FFF3E0; color: $warning; }
-  &--confirmed { background: #E8F5E9; color: $primary; }
-  &--shipped   { background: #E3F2FD; color: $info; }
-  &--delivered { background: #E8F5E9; color: $primary-dark; }
-  &--cancelled { background: #FFEBEE; color: $danger; }
-  &--paid      { background: #E8F5E9; color: $primary-dark; }
+  &--pending    { background: #FFF3E0; color: $warning; }
+  &--confirmed  { background: #E8F5E9; color: $primary; }
+  &--processing { background: #E8EAF6; color: #3949AB; }
+  &--shipped    { background: #E3F2FD; color: $info; }
+  &--delivered  { background: #E8F5E9; color: $primary-dark; }
+  &--cancelled  { background: #FFEBEE; color: $danger; }
+  &--refunded   { background: #F3E5F5; color: #7B1FA2; }
+  &--paid       { background: #E8F5E9; color: $primary-dark; }
+  &--failed     { background: #FFEBEE; color: $danger; }
 }
 
 .rethink-admin-action-btns {

@@ -219,7 +219,7 @@ export default async function HomePage() {
         <div className="rethink-promo-banner">
           <div>
             <h3><Flame size={18} style={{ display: "inline", verticalAlign: "middle", marginRight: 6 }} />Ưu đãi đặc biệt tháng này</h3>
-            <p>Giảm đến 20% cho đơn hàng phân bón từ 10 triệu đồng</p>
+            <p>Giảm đến 20% cho đơn hàng phân bón và thuốc trừ sâu từ 10 triệu đồng</p>
           </div>
           <Link href="/khuyen-mai" className="rethink-promo-banner__btn">
             Xem ngay

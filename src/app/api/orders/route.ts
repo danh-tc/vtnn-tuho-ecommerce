@@ -63,13 +63,14 @@ export async function POST(req: NextRequest) {
     }
 
     const orderCode = generateOrderCode();
+    const userId = session?.user?.id ? Number.parseInt(session.user.id) : null;
 
     // Create order + items + reduce stock in a transaction
     const order = await prisma.$transaction(async (tx) => {
       const newOrder = await tx.order.create({
         data: {
           code: orderCode,
-          userId: session?.user?.id ? parseInt(session.user.id) : null,
+          userId,
           shippingName: shipping.name,
           shippingPhone: shipping.phone,
           shippingProvince: shipping.province,
@@ -109,12 +110,45 @@ export async function POST(req: NextRequest) {
           orderId: newOrder.id,
           method: paymentMethod,
           amount: total,
-          status: paymentMethod === "cod" ? "pending" : "pending",
+          status: "pending",
         },
       });
 
       return newOrder;
     });
+
+    // Save address to user's address book (outside transaction — best-effort, non-blocking)
+    if (userId) {
+      try {
+        const existing = await prisma.address.findFirst({
+          where: {
+            userId,
+            provinceName: shipping.province,
+            districtName: shipping.district,
+            wardName: shipping.ward,
+            street: shipping.street,
+          },
+        });
+
+        if (!existing) {
+          const anyAddress = await prisma.address.findFirst({ where: { userId } });
+          await prisma.address.create({
+            data: {
+              userId,
+              recipientName: shipping.name,
+              phone: shipping.phone,
+              provinceName: shipping.province,
+              districtName: shipping.district,
+              wardName: shipping.ward,
+              street: shipping.street,
+              isDefault: !anyAddress,
+            },
+          });
+        }
+      } catch (addrErr) {
+        console.error("[orders] Failed to save address:", addrErr);
+      }
+    }
 
     // TODO: If vnpay/momo, generate payment URL here
     // For now, return order code for COD and bank_transfer
