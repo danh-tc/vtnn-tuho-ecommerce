@@ -94,10 +94,10 @@ export default function RichTextEditor({ value, onChange, placeholder }: Props) 
   function toggleHtmlMode() {
     if (!editor) return;
     if (!htmlMode) {
-      // switching TO html mode — capture current content
+      // switching TO html mode - capture current content
       setHtmlSource(editor.getHTML());
     } else {
-      // switching BACK to visual — push html into editor
+      // switching BACK to visual - push html into editor
       editor.commands.setContent(htmlSource, { emitUpdate: false });
       onChange(htmlSource);
     }
@@ -148,7 +148,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: Props) 
 
         <div className="rte-toolbar__sep" />
 
-        {/* Color — separate button + hidden native picker */}
+        {/* Color - separate button + hidden native picker */}
         <div className="rte-toolbar__group">
           <div className="rte-color-btn" title="Text color" onClick={openColorPicker}>
             <span className="rte-color-btn__letter" style={{ color: currentColor }}>A</span>

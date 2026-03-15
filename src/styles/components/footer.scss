@@ -63,7 +63,7 @@
       color: rgba($white, 0.8);
       transition: $transition;
 
-      &:hover {
+      @include hover {
         color: $accent;
         padding-left: $space-1;
       }

@@ -132,7 +132,7 @@ export default function AdminCategoriesPage() {
             <div className="rethink-admin-form-group">
               <label>Danh mục cha</label>
               <select value={form.parentId} onChange={(e) => setForm((f) => ({ ...f, parentId: e.target.value }))}>
-                <option value="">— Không có —</option>
+                <option value="">- Không có -</option>
                 {topLevel.filter((c) => c.id !== editingId).map((c) => (
                   <option key={c.id} value={c.id}>{c.name}</option>
                 ))}
@@ -184,7 +184,7 @@ export default function AdminCategoriesPage() {
                 <tr key={cat.id}>
                   <td style={{ fontWeight: 600 }}>{cat.name}</td>
                   <td style={{ color: "#757575", fontSize: 13 }}>{cat.slug}</td>
-                  <td>{cat.parent?.name ?? <span style={{ color: "#BDBDBD" }}>—</span>}</td>
+                  <td>{cat.parent?.name ?? <span style={{ color: "#BDBDBD" }}>-</span>}</td>
                   <td>{cat._count.products}</td>
                   <td>{cat.sortOrder}</td>
                   <td>

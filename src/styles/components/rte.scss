@@ -52,7 +52,9 @@
   cursor: pointer;
   gap: 1px;
 
-  &:hover { background: #EEEEEE; }
+  @media (hover: hover) and (pointer: fine) {
+    &:hover { background: #EEEEEE; }
+  }
 
   &__letter {
     font-size: 13px;
@@ -90,7 +92,9 @@
   transition: background 0.15s, color 0.15s;
   flex-shrink: 0;
 
-  &:hover { background: #EEEEEE; color: $primary-dark; }
+  @media (hover: hover) and (pointer: fine) {
+    &:hover { background: #EEEEEE; color: $primary-dark; }
+  }
 
   &--active {
     background: #E8F5E9;
@@ -152,7 +156,7 @@
   p { margin: 0 0 10px; }
   p:last-child { margin-bottom: 0; }
 
-  // Lists — override global reset
+  // Lists - override global reset
   ul { padding-left: 24px; margin: 8px 0 10px; list-style-type: disc !important; }
   ol { padding-left: 24px; margin: 8px 0 10px; list-style-type: decimal !important; }
   ul ul { list-style-type: circle !important; }

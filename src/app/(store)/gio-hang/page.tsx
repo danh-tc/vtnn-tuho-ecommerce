@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, ArrowRight, ArrowLeft } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 import { formatPrice } from "@/lib/utils";
 
@@ -114,10 +114,10 @@ export default function CartPage() {
           </div>
 
           <Link href="/dat-hang" className="rethink-cart__checkout-btn">
-            Tiến hành đặt hàng →
+            Tiến hành đặt hàng <ArrowRight size={18} strokeWidth={2.5} />
           </Link>
           <Link href="/san-pham" className="rethink-cart__continue-shopping">
-            ← Tiếp tục mua sắm
+            <ArrowLeft size={16} /> Tiếp tục mua sắm
           </Link>
         </div>
       </div>

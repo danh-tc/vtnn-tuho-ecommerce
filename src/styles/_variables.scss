@@ -1,11 +1,11 @@
 // ============================================================
-// Colors — Agricultural Green & White Theme
+// Colors - Agricultural Green & White Theme
 // ============================================================
 $primary:        #2E7D32;   // Deep forest green
 $primary-light:  #4CAF50;   // Lighter green (hover)
 $primary-dark:   #1B5E20;   // Dark green (header, footer)
 $accent:         #8BC34A;   // Lime green (badges, highlights)
-$accent-warm:    #E07B45;   // Warm orange — section titles, highlights
+$accent-warm:    #E07B45;   // Warm orange - section titles, highlights
 $white:          #FFFFFF;
 $bg-light:       #F8F9FA;   // Neutral off-white page background
 $bg-card:        #F9FBF9;   // Very subtle green tint for card bodies
@@ -52,8 +52,8 @@ $header-height:       64px;
 $header-nav-height:   44px;
 $header-topbar-height: 32px;
 // Total fixed header height (used for sticky offsets)
-$header-total:    calc(#{$header-height} + #{$header-nav-height});           // 108px — mobile
-$header-total-md: calc(#{$header-height} + #{$header-nav-height} + #{$header-topbar-height}); // 140px — desktop
+$header-total:    calc(#{$header-height} + #{$header-nav-height});           // 108px - mobile
+$header-total-md: calc(#{$header-height} + #{$header-nav-height} + #{$header-topbar-height}); // 140px - desktop
 $border-radius:   10px;
 $border-radius-sm: 6px;
 $border-radius-lg: 16px;

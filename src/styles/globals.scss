@@ -15,9 +15,13 @@
 @use 'components/auth';
 @use 'components/skeleton';
 @use 'components/rte';
+@use 'components/policy';
+@use 'components/contact';
+@use 'components/promotions';
+@use 'components/orders';
 
 /* ============================================================
-   Google Fonts — Be Vietnam Pro (Vietnamese-optimized)
+   Google Fonts - Be Vietnam Pro (Vietnamese-optimized)
    ============================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap&subset=vietnamese');
 
@@ -110,6 +114,8 @@ ul, ol {
   background: $primary-light;
   border-radius: 3px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: $primary;
+@media (hover: hover) and (pointer: fine) {
+  ::-webkit-scrollbar-thumb:hover {
+    background: $primary;
+  }
 }

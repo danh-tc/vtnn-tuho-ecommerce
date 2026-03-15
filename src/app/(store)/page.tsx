@@ -3,7 +3,23 @@ import { Truck, ShieldCheck, RefreshCw, Phone, Flame, Sprout, FlaskConical, Whea
 import { prisma } from "@/lib/prisma";
 import ProductCard from "@/components/store/ProductCard";
 import HeroBannerImage from "@/components/store/HeroBannerImage";
+import type { Metadata } from "next";
+
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "VTNN Tư Hồ – Vật tư nông nghiệp chất lượng cao",
+  description:
+    "Cửa hàng vật tư nông nghiệp Tư Hồ – Phân bón, thuốc BVTV, hạt giống chính hãng. Giao hàng toàn quốc, hỗ trợ kỹ thuật miễn phí.",
+  alternates: { canonical: "https://vtnntuho.online" },
+  openGraph: {
+    title: "VTNN Tư Hồ – Vật tư nông nghiệp chất lượng cao",
+    description:
+      "Phân bón, thuốc BVTV, hạt giống chính hãng – giao hàng toàn quốc. Tư vấn kỹ thuật miễn phí.",
+    url: "https://vtnntuho.online",
+    images: [{ url: "/images/og-default.jpg", width: 1200, height: 630 }],
+  },
+};
 
 
 async function getFeaturedProducts() {
@@ -104,7 +120,7 @@ export default async function HomePage() {
               src: "/images/hero-1.jpg",
               alt: "Vật tư nông nghiệp chất lượng cao",
               title: "Vật tư nông nghiệp chất lượng cao",
-              subtitle: "Phân bón, thuốc bảo vệ thực vật, hạt giống chính hãng — giao hàng toàn quốc.",
+              subtitle: "Phân bón, thuốc bảo vệ thực vật, hạt giống chính hãng - giao hàng toàn quốc.",
               cta: { label: "Xem tất cả sản phẩm", href: "/san-pham" },
             },
             {
@@ -203,7 +219,7 @@ export default async function HomePage() {
         <div className="rethink-promo-banner">
           <div>
             <h3><Flame size={18} style={{ display: "inline", verticalAlign: "middle", marginRight: 6 }} />Ưu đãi đặc biệt tháng này</h3>
-            <p>Giảm đến 30% cho đơn hàng phân bón từ 2 triệu đồng</p>
+            <p>Giảm đến 20% cho đơn hàng phân bón từ 10 triệu đồng</p>
           </div>
           <Link href="/khuyen-mai" className="rethink-promo-banner__btn">
             Xem ngay

@@ -1,0 +1,242 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.rethink-orders {
+  @include container;
+  padding-top: $space-7;
+  padding-bottom: $space-8;
+
+  &__header {
+    margin-bottom: $space-5;
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: $primary-dark;
+    }
+
+    a {
+      font-size: 13px;
+      color: $primary;
+      margin-left: auto;
+      @include hover { text-decoration: underline; }
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  &__card {
+    @include card;
+    overflow: hidden;
+  }
+
+  &__card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: $space-2;
+    padding: $space-4 $space-5;
+    border-bottom: 1px solid $border;
+    background: $bg-light;
+
+    @media (max-width: 576px) { padding: $space-3 $space-4; }
+  }
+
+  &__code {
+    font-size: 15px;
+    font-weight: 700;
+    color: $text-main;
+  }
+
+  &__date {
+    font-size: 13px;
+    color: $text-muted;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+
+    &--pending   { background: rgba(255, 152, 0, 0.12); color: #E65100; }
+    &--confirmed { background: rgba(33, 150, 243, 0.12); color: #0D47A1; }
+    &--processing{ background: rgba(156, 39, 176, 0.12); color: #6A1B9A; }
+    &--shipped   { background: rgba(3, 169, 244, 0.12); color: #01579B; }
+    &--delivered { background: rgba(46, 125, 50, 0.12); color: $primary-dark; }
+    &--cancelled { background: rgba(244, 67, 54, 0.1); color: $danger; }
+    &--refunded  { background: rgba(158, 158, 158, 0.12); color: #424242; }
+  }
+
+  &__items {
+    padding: $space-4 $space-5;
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+
+    @media (max-width: 576px) { padding: $space-3 $space-4; }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    font-size: 14px;
+    color: $text-main;
+
+    img {
+      width: 48px;
+      height: 48px;
+      object-fit: cover;
+      border-radius: $border-radius-sm;
+      border: 1px solid $border;
+      flex-shrink: 0;
+    }
+
+    &-name {
+      flex: 1;
+      font-weight: 500;
+      @include text-truncate(1);
+    }
+
+    &-qty {
+      color: $text-muted;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    &-price {
+      font-weight: 700;
+      color: $danger;
+      white-space: nowrap;
+    }
+  }
+
+  &__more-items {
+    font-size: 13px;
+    color: $text-muted;
+    font-style: italic;
+  }
+
+  &__card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: $space-3;
+    padding: $space-4 $space-5;
+    border-top: 1px solid $border;
+
+    @media (max-width: 576px) { padding: $space-3 $space-4; }
+  }
+
+  &__total {
+    font-size: 15px;
+    font-weight: 700;
+    color: $text-main;
+
+    span { color: $danger; }
+  }
+
+  &__empty {
+    @include card;
+    padding: $space-8;
+    text-align: center;
+
+    svg { color: $border; margin-bottom: $space-4; }
+    h2 { font-size: 20px; font-weight: 700; color: $text-main; margin-bottom: $space-2; }
+    p { font-size: 14px; color: $text-muted; margin-bottom: $space-5; }
+
+    a {
+      @include btn-primary;
+      display: inline-flex;
+      padding: $space-3 $space-6;
+      border-radius: 50px;
+    }
+  }
+}
+
+// Address page
+.rethink-address {
+  @include container;
+  padding-top: $space-7;
+  padding-bottom: $space-8;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    margin-bottom: $space-5;
+
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: $primary-dark;
+    }
+
+    a {
+      font-size: 13px;
+      color: $primary;
+      margin-left: auto;
+      @include hover { text-decoration: underline; }
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+  }
+
+  &__card {
+    @include card;
+    padding: $space-5;
+    display: flex;
+    align-items: flex-start;
+    gap: $space-4;
+
+    svg { color: $primary; flex-shrink: 0; margin-top: 2px; }
+  }
+
+  &__info {
+    flex: 1;
+
+    strong { font-size: 15px; font-weight: 700; color: $text-main; }
+
+    p { font-size: 14px; color: $text-muted; margin-top: $space-1; line-height: 1.5; }
+  }
+
+  &__meta {
+    font-size: 12px;
+    color: $text-muted;
+    margin-top: $space-2;
+  }
+
+  &__empty {
+    @include card;
+    padding: $space-8;
+    text-align: center;
+
+    svg { color: $border; margin-bottom: $space-4; }
+    h2 { font-size: 20px; font-weight: 700; color: $text-main; margin-bottom: $space-2; }
+    p { font-size: 14px; color: $text-muted; margin-bottom: $space-5; }
+
+    a {
+      @include btn-primary;
+      display: inline-flex;
+      padding: $space-3 $space-6;
+      border-radius: 50px;
+    }
+  }
+}

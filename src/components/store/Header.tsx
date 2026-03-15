@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 
-import { Phone, Search, User, ShoppingCart, Flame } from "lucide-react";
+import { Phone, User, ShoppingCart, Flame } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
+import SearchBox from "@/components/store/SearchBox";
 
 export default function Header() {
   const cartCount = useCartStore((s) => s.totalItems());
@@ -28,7 +29,7 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Set --header-h CSS var to the real rendered height — runs before paint
+  // Set --header-h CSS var to the real rendered height - runs before paint
   useLayoutEffect(() => {
     const update = () => {
       if (!headerRef.current) return;
@@ -45,7 +46,7 @@ export default function Header() {
       <div className="rethink-header__top-bar">
         <div className="rethink-header__top-bar-inner">
           <span><Phone size={13} style={{ display: "inline", verticalAlign: "middle", marginRight: 4 }} />Hotline: 098 99 77 884 | Giao hàng toàn quốc</span>
-          <span>Thứ 2 – Thứ 7: 7:00 – 17:30</span>
+          <span>Thứ 2 – Chủ Nhật: 7:00 – 22:00</span>
         </div>
       </div>
 
@@ -60,19 +61,7 @@ export default function Header() {
           </div>
         </Link>
 
-        <div className="rethink-header__search">
-          <form action="/san-pham" method="GET">
-            <input
-              name="q"
-              type="search"
-              placeholder="Tìm phân bón, thuốc BVTV, hạt giống..."
-              autoComplete="off"
-            />
-            <button type="submit" aria-label="Tìm kiếm">
-              <Search size={18} />
-            </button>
-          </form>
-        </div>
+        <SearchBox />
 
         <div className="rethink-header__actions">
           <Link href={session ? "/tai-khoan" : "/dang-nhap"} className="rethink-header__action-btn">

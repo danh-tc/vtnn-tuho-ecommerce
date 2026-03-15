@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
-import { type LucideIcon, LayoutDashboard, Package, FolderOpen, Tag, ShoppingCart, Users, Gift, Image, TrendingUp, Leaf } from "lucide-react";
+import { type LucideIcon, LayoutDashboard, Package, FolderOpen, Tag, ShoppingCart, Users, Gift, Image, TrendingUp, Leaf, MessageSquare } from "lucide-react";
 
 interface NavItem { href: string; label: string; icon: LucideIcon }
 interface NavSection { label: string; items: NavItem[] }
@@ -36,6 +36,7 @@ const NAV: NavSection[] = [
     items: [
       { href: "/admin/banner", label: "Banner", icon: Image },
       { href: "/admin/bao-cao", label: "Báo cáo", icon: TrendingUp },
+      { href: "/admin/lien-he", label: "Liên hệ", icon: MessageSquare },
     ],
   },
 ];

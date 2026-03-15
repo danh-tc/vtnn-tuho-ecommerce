@@ -7,7 +7,7 @@ export interface CartItem {
   productName: string;
   variantName: string;
   sku: string;
-  price: number;       // VND — use sale price if available
+  price: number;       // VND - use sale price if available
   imageUrl: string;
   quantity: number;
   stock: number;

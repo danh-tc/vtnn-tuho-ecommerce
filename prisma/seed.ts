@@ -162,7 +162,7 @@ async function main() {
     update: {},
     create: {
       id: 1,
-      title: "Khuyến mãi tháng 3 — Giảm 20% phân bón",
+      title: "Khuyến mãi tháng 3 - Giảm 20% phân bón",
       imageUrl: "https://placehold.co/1200x400/2E7D32/white?text=VTNN+Tu+Ho",
       position: "hero",
       isActive: true,

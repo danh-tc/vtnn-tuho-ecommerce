@@ -89,8 +89,10 @@
   background: $primary;
   color: $white;
 
-  &:hover:not(:disabled) {
-    background: $primary-dark;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover:not(:disabled) {
+      background: $primary-dark;
+    }
   }
 }
 
@@ -100,9 +102,11 @@
   color: $primary;
   border: 2px solid $primary;
 
-  &:hover:not(:disabled) {
-    background: $primary;
-    color: $white;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover:not(:disabled) {
+      background: $primary;
+      color: $white;
+    }
   }
 }
 
@@ -124,5 +128,15 @@
 
   &::placeholder {
     color: $text-muted;
+  }
+}
+
+// Hover — only fires on devices that genuinely support hover (mouse/trackpad)
+// Prevents "stuck hover" on mobile touchscreens
+@mixin hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @content;
+    }
   }
 }

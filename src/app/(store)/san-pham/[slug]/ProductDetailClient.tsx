@@ -231,10 +231,10 @@ export default function ProductDetailClient({ product }: ProductDetailProps) {
           {/* Features */}
           <div className="rethink-product-detail__features">
             <div className="rethink-product-detail__feature-item">
-              <span><Truck size={16} /></span><span>Giao hàng toàn quốc — miễn phí đơn từ 500.000đ</span>
+              <span><Truck size={16} /></span><span>Giao hàng toàn quốc - miễn phí đơn từ 500.000đ</span>
             </div>
             <div className="rethink-product-detail__feature-item">
-              <span><ShieldCheck size={16} /></span><span>Hàng chính hãng — hoàn tiền 100% nếu hàng giả</span>
+              <span><ShieldCheck size={16} /></span><span>Hàng chính hãng - hoàn tiền 100% nếu hàng giả</span>
             </div>
             <div className="rethink-product-detail__feature-item">
               <span><RefreshCw size={16} /></span><span>Đổi trả trong 7 ngày nếu có lỗi từ nhà sản xuất</span>

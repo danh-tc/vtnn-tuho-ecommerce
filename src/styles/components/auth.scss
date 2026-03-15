@@ -104,7 +104,7 @@
       display: flex;
       align-items: center;
 
-      &:hover { color: $text-main; }
+      @include hover { color: $text-main; }
     }
   }
 
@@ -162,7 +162,7 @@
       font-weight: 600;
       text-decoration: none;
 
-      &:hover { text-decoration: underline; }
+      @include hover { text-decoration: underline; }
     }
   }
 
@@ -178,7 +178,7 @@
       color: $text-muted;
       text-decoration: none;
 
-      &:hover { color: $primary; }
+      @include hover { color: $primary; }
     }
   }
 }
@@ -271,11 +271,11 @@
     width: 100%;
     transition: $transition;
 
-    &:hover { background: $bg-light; color: $primary; }
+    @include hover { background: $bg-light; color: $primary; }
 
     &--danger {
       color: $danger;
-      &:hover { background: rgba($danger, 0.06); color: $danger; }
+      @include hover { background: rgba($danger, 0.06); color: $danger; }
     }
   }
 }

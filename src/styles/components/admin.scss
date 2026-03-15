@@ -96,7 +96,7 @@
     transition: $transition;
     border-left: 3px solid transparent;
 
-    &:hover {
+    @include hover {
       background: rgba($white, 0.08);
       color: $white;
     }
@@ -301,7 +301,9 @@
 
   td { color: $text-main; }
 
-  tbody tr:hover { background: #FAFAFA; }
+  @media (hover: hover) and (pointer: fine) {
+    tbody tr:hover { background: #FAFAFA; }
+  }
 }
 
 .rethink-admin-badge {
@@ -332,7 +334,7 @@
   color: $primary;
   border: 1px solid $border;
 
-  &:hover { background: $primary; color: $white; }
+  @include hover { background: $primary; color: $white; }
 }
 
 // ============================================================
@@ -380,7 +382,7 @@
     padding: 0;
     display: flex;
     align-items: center;
-    &:hover { color: $danger; }
+    @include hover { color: $danger; }
   }
 
   &__error {
@@ -447,7 +449,7 @@
   color: $text-muted;
   border: 1px solid $border;
 
-  &:hover { border-color: $text-muted; color: $text-main; }
+  @include hover { border-color: $text-muted; color: $text-main; }
 }
 
 .rethink-admin-table-input {
@@ -493,5 +495,5 @@
   color: $danger;
   border: 1px solid #FFCDD2;
 
-  &:hover { background: $danger; color: $white; }
+  @include hover { background: $danger; color: $white; }
 }

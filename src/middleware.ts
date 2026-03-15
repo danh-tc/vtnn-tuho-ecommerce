@@ -5,7 +5,7 @@ export default auth((req) => {
   const { pathname } = req.nextUrl;
   const user = req.auth?.user;
 
-  // Protect /admin routes — must be admin or staff
+  // Protect /admin routes - must be admin or staff
   if (pathname.startsWith("/admin")) {
     if (!user) {
       return NextResponse.redirect(new URL("/dang-nhap?from=admin", req.url));
@@ -15,7 +15,7 @@ export default auth((req) => {
     }
   }
 
-  // Protect /tai-khoan routes — must be logged in
+  // Protect /tai-khoan routes - must be logged in
   if (pathname.startsWith("/tai-khoan")) {
     if (!user) {
       return NextResponse.redirect(

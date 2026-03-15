@@ -99,7 +99,7 @@
       font-size: 16px;
       transition: $transition;
 
-      &:hover { background: $border; }
+      @include hover { background: $border; }
       &:disabled { opacity: 0.4; cursor: not-allowed; }
     }
 
@@ -125,7 +125,7 @@
     font-size: 13px;
     transition: $transition;
 
-    &:hover { color: $danger; }
+    @include hover { color: $danger; }
   }
 
   // ============================================================
@@ -182,23 +182,50 @@
   }
 
   &__checkout-btn {
-    @include btn-primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-2;
     width: 100%;
-    padding: $space-4;
-    font-size: 16px;
+    padding: 15px $space-5;
     margin-top: $space-4;
-    display: block;
-    text-align: center;
+    background: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
+    color: $white;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    border-radius: 50px;
+    box-shadow: 0 4px 16px rgba(46, 125, 50, 0.32);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+    @include hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(46, 125, 50, 0.42);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(46, 125, 50, 0.28);
+    }
   }
 
   &__continue-shopping {
-    display: block;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
     margin-top: $space-3;
+    padding: 10px $space-4;
     font-size: 14px;
+    font-weight: 500;
     color: $primary;
+    border: 1.5px solid $primary;
+    border-radius: 50px;
+    transition: background 0.18s ease;
 
-    &:hover { text-decoration: underline; }
+    @include hover {
+      background: rgba(46, 125, 50, 0.06);
+    }
   }
 
   // ============================================================

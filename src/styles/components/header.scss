@@ -15,7 +15,7 @@
     box-shadow 0.38s ease;
 
   // ================================================================
-  // Overlay mode — transparent, on top of hero banner
+  // Overlay mode - transparent, on top of hero banner
   // ================================================================
   &--overlay {
     background: transparent;
@@ -49,18 +49,21 @@
       &::placeholder {
         color: rgba($white, 0.6);
       }
+      &::-webkit-search-cancel-button {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M2 2l10 10M12 2L2 12' stroke='%23ffffff' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+      }
     }
     .rethink-header__search button {
       background: rgba($white, 0.18);
       color: $white;
-      &:hover {
+      @include hover {
         background: rgba($white, 0.32);
       }
     }
 
     .rethink-header__action-btn {
       color: rgba($white, 0.9);
-      &:hover {
+      @include hover {
         background: rgba($white, 0.12);
         color: $white;
       }
@@ -72,8 +75,11 @@
     }
     .rethink-header__nav-link {
       color: rgba($white, 0.82);
-      &:hover,
       &--active {
+        color: $white;
+        border-bottom-color: $white;
+      }
+      @include hover {
         color: $white;
         border-bottom-color: $white;
       }
@@ -120,7 +126,7 @@
     align-items: center;
     gap: $space-2;
     transition: opacity 0.2s;
-    &:hover {
+    @include hover {
       opacity: 0.82;
     }
 
@@ -166,6 +172,7 @@
     flex: 1;
     max-width: 500px;
     display: none;
+    position: relative; // anchor for the dropdown
 
     @include lg {
       display: flex;
@@ -200,6 +207,21 @@
         color: $text-muted;
         transition: color 0.38s;
       }
+      // Native "×" clear button
+      &::-webkit-search-cancel-button {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 14px;
+        height: 14px;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M2 2l10 10M12 2L2 12' stroke='%236B7280' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;
+        cursor: pointer;
+        margin-right: 4px;
+        opacity: 0.7;
+        transition: opacity 0.15s;
+      }
+      @media (hover: hover) and (pointer: fine) {
+        &::-webkit-search-cancel-button:hover { opacity: 1; }
+      }
     }
 
     button {
@@ -210,7 +232,7 @@
       color: $white;
       border-radius: 0 99px 99px 0;
       transition: background 0.2s;
-      &:hover {
+      @include hover {
         background: $primary-dark;
       }
     }
@@ -245,7 +267,7 @@
       color 0.2s;
     text-decoration: none;
 
-    &:hover {
+    @include hover {
       background: $bg-light;
       color: $primary;
     }
@@ -306,8 +328,11 @@
       color 0.2s,
       border-bottom-color 0.2s;
 
-    &:hover,
     &--active {
+      color: $primary;
+      border-bottom-color: $primary;
+    }
+    @include hover {
       color: $primary;
       border-bottom-color: $primary;
     }
@@ -315,7 +340,124 @@
 }
 
 // ================================================================
-// Store layout main — padding to clear fixed header
+// Search dropdown
+// ================================================================
+.rethink-search-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: $white;
+  border: 1px solid $border;
+  border-radius: $border-radius;
+  box-shadow: $shadow-lg;
+  z-index: 300;
+  overflow: hidden;
+
+  &__status {
+    padding: $space-4;
+    font-size: 13px;
+    color: $text-muted;
+    text-align: center;
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li + li {
+      border-top: 1px solid $border;
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    width: 100%;
+    padding: $space-2 $space-3;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s;
+
+    &--active {
+      background: $bg-light;
+    }
+    @include hover {
+      background: $bg-light;
+    }
+  }
+
+  &__img {
+    width: 44px;
+    height: 44px;
+    object-fit: cover;
+    border-radius: $border-radius-sm;
+    flex-shrink: 0;
+    background: $bg-light;
+
+    &--placeholder {
+      display: block;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  &__name {
+    font-size: 13px;
+    font-weight: 500;
+    color: $text-main;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__price {
+    font-size: 12px;
+    color: $primary-dark;
+    font-weight: 600;
+    display: flex;
+    gap: $space-2;
+    align-items: center;
+  }
+
+  &__sale {
+    color: $danger;
+  }
+
+  &__orig {
+    color: $text-muted;
+    font-weight: 400;
+    text-decoration: line-through;
+    font-size: 11px;
+  }
+
+  &__view-all {
+    display: block;
+    padding: $space-3 $space-4;
+    border-top: 1px solid $border;
+    font-size: 13px;
+    color: $primary;
+    font-weight: 500;
+    text-align: center;
+    transition: background 0.15s;
+
+    @include hover {
+      background: $bg-light;
+    }
+  }
+}
+
+// ================================================================
+// Store layout main - padding to clear fixed header
 // ================================================================
 .rethink-store-main {
   padding-top: var(--header-h, #{$header-total});
@@ -326,7 +468,7 @@
   }
 
   // Catalog page: sidebar is a direct child of main so this element
-  // becomes the flex containing block — sticky can span full page height
+  // becomes the flex containing block - sticky can span full page height
   &:has(.rethink-catalog__sidebar) {
     @include lg {
       @include container;

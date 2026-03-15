@@ -19,7 +19,7 @@
   }
 
   // ============================================================
-  // Sidebar — rendered as sibling of .rethink-catalog in HTML
+  // Sidebar - rendered as sibling of .rethink-catalog in HTML
   // (direct child of .rethink-store-main for sticky to work)
   // ============================================================
   &__sidebar {
@@ -60,7 +60,7 @@
     border-radius: $border-radius-sm;
     transition: $transition;
 
-    &:hover {
+    @include hover {
       background: $primary;
       color: $white;
     }
@@ -98,13 +98,15 @@
     transition: $transition;
     cursor: pointer;
 
-    &:hover,
     &--active {
       background: $bg-light;
       color: $primary;
+      font-weight: 600;
     }
-
-    &--active { font-weight: 600; }
+    @include hover {
+      background: $bg-light;
+      color: $primary;
+    }
 
     span {
       font-size: 12px;
@@ -224,7 +226,7 @@
     font-size: 14px;
     padding: 0;
 
-    &:hover {
+    @include hover {
       border-color: $primary;
       color: $primary;
     }

@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Private - no value for crawlers
+Disallow: /admin/
+Disallow: /api/
+Disallow: /tai-khoan/
+Disallow: /gio-hang/
+Disallow: /dat-hang/
+
+Sitemap: https://vtnntuho.online/sitemap.xml

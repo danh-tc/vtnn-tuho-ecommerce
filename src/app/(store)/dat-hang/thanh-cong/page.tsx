@@ -25,7 +25,7 @@ export default async function OrderSuccessPage({ searchParams }: Props) {
         <div className="rethink-order-success__info-box">
           <h3><Phone size={16} style={{ display: "inline", verticalAlign: "middle", marginRight: 6 }} />Thông tin liên hệ</h3>
           <p>Hotline: <strong>098 99 77 884</strong></p>
-          <p>Thứ 2 – Thứ 7: 7:00 – 17:30</p>
+          <p>Thứ 2 – Chủ Nhật: 7:00 – 22:00</p>
         </div>
 
         <div className="rethink-order-success__actions">

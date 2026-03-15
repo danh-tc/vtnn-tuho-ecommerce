@@ -228,7 +228,7 @@ export default function ProductForm({ productId, initialData, categories, brands
                       <td><input className="rethink-admin-table-input" value={v.name} onChange={(e) => updateVariant(i, "name", e.target.value)} placeholder="1kg" /></td>
                       <td><input className="rethink-admin-table-input" value={v.sku} onChange={(e) => updateVariant(i, "sku", e.target.value)} placeholder="NPK-1KG" /></td>
                       <td><input className="rethink-admin-table-input" type="number" value={v.price} onChange={(e) => updateVariant(i, "price", e.target.value)} placeholder="35000" /></td>
-                      <td><input className="rethink-admin-table-input" type="number" value={v.salePrice} onChange={(e) => updateVariant(i, "salePrice", e.target.value)} placeholder="—" /></td>
+                      <td><input className="rethink-admin-table-input" type="number" value={v.salePrice} onChange={(e) => updateVariant(i, "salePrice", e.target.value)} placeholder="-" /></td>
                       <td><input className="rethink-admin-table-input" type="number" value={v.stock} onChange={(e) => updateVariant(i, "stock", e.target.value)} /></td>
                       <td style={{ textAlign: "center" }}>
                         <input type="radio" name="default-variant" checked={v.isDefault} onChange={() => setDefault(i)} />
@@ -305,14 +305,14 @@ export default function ProductForm({ productId, initialData, categories, brands
               <div className="rethink-admin-form-group">
                 <label>Danh mục *</label>
                 <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
-                  <option value="">— Chọn danh mục —</option>
+                  <option value="">- Chọn danh mục -</option>
                   {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
                 </select>
               </div>
               <div className="rethink-admin-form-group">
                 <label>Thương hiệu</label>
                 <select value={brandId} onChange={(e) => setBrandId(e.target.value)}>
-                  <option value="">— Không có —</option>
+                  <option value="">- Không có -</option>
                   {brands.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
                 </select>
               </div>

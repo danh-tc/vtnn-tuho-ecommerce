@@ -1,0 +1,185 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.rethink-contact {
+  @include container;
+  padding-top: $space-7;
+  padding-bottom: $space-8;
+
+  &__header {
+    text-align: center;
+    margin-bottom: $space-7;
+
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      color: $primary-dark;
+      margin-bottom: $space-2;
+    }
+
+    p { font-size: 15px; color: $text-muted; }
+  }
+
+  &__layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $space-6;
+
+    @include lg {
+      grid-template-columns: 1fr 400px;
+    }
+  }
+
+  // ---- Form ----
+  &__form-card {
+    @include card;
+    padding: $space-6;
+  }
+
+  &__form-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: $text-main;
+    margin-bottom: $space-5;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  &__form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $space-4;
+
+    @include sm {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  &__form-group {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+
+    label {
+      font-size: 13px;
+      font-weight: 600;
+      color: $text-main;
+    }
+
+    input, select, textarea {
+      @include input-base;
+
+      &.error {
+        border-color: $danger;
+        &:focus { box-shadow: 0 0 0 3px rgba($danger, 0.12); }
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 130px;
+      padding-top: $space-3;
+    }
+  }
+
+  &__submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-2;
+    padding: 14px $space-6;
+    background: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
+    color: $white;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(46, 125, 50, 0.3);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    align-self: flex-start;
+
+    @include hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(46, 125, 50, 0.38);
+    }
+
+    &:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+  }
+
+  &__success {
+    background: rgba(46, 125, 50, 0.08);
+    border: 1px solid rgba(46, 125, 50, 0.25);
+    border-radius: $border-radius;
+    padding: $space-5;
+    text-align: center;
+    color: $primary-dark;
+    font-weight: 600;
+    font-size: 15px;
+
+    p { margin-top: $space-2; font-weight: 400; font-size: 14px; color: $text-muted; }
+  }
+
+  // ---- Info sidebar ----
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  &__info-card {
+    @include card;
+    padding: $space-5;
+
+    h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: $primary-dark;
+      margin-bottom: $space-4;
+    }
+  }
+
+  &__info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-3;
+    padding: $space-3 0;
+    border-bottom: 1px solid $border;
+    font-size: 14px;
+
+    &:last-child { border-bottom: none; padding-bottom: 0; }
+
+    svg { color: $primary; flex-shrink: 0; margin-top: 2px; }
+
+    span {
+      color: $text-main;
+      line-height: 1.5;
+    }
+
+    strong {
+      display: block;
+      font-weight: 600;
+      font-size: 13px;
+      color: $text-muted;
+      margin-bottom: 2px;
+    }
+  }
+
+  &__hours {
+    font-size: 14px;
+    color: $text-main;
+
+    tr td:first-child {
+      font-weight: 600;
+      padding-right: $space-3;
+      color: $text-muted;
+      font-size: 13px;
+    }
+
+    tr td { padding: $space-1 0; }
+  }
+}

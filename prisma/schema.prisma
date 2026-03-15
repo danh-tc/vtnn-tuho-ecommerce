@@ -238,7 +238,7 @@ model OrderItem {
   orderId   Int  @map("order_id")
   variantId Int? @map("variant_id")
 
-  // Price snapshots — never look up live prices for past orders
+  // Price snapshots - never look up live prices for past orders
   productName String @map("product_name")
   variantName String @map("variant_name")
   sku         String
@@ -337,6 +337,24 @@ model Banner {
 // ============================================================
 // Notifications
 // ============================================================
+
+// ============================================================
+// Contact Messages
+// ============================================================
+
+model ContactMessage {
+  id        Int       @id @default(autoincrement())
+  name      String
+  phone     String
+  email     String?
+  subject   String?
+  message   String    @db.Text
+  isRead    Boolean   @default(false) @map("is_read")
+  adminNote String?   @map("admin_note") @db.Text
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  @@map("contact_messages")
+}
 
 model Notification {
   id        Int              @id @default(autoincrement())

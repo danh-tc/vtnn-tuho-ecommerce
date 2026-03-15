@@ -120,7 +120,7 @@ export default async function AdminProductsPage({ searchParams }: { searchParams
                             </div>
                           )}
                         </div>
-                      ) : "—"}
+                      ) : "-"}
                     </td>
                     <td>
                       <span style={{ color: totalStock <= 5 ? "#D32F2F" : "#212121", fontWeight: 600 }}>

@@ -202,7 +202,7 @@ export default function CheckoutPage() {
             {items.map((item) => (
               <div key={item.variantId} className="rethink-checkout__order-item">
                 <span className="rethink-checkout__order-item-name">
-                  {item.productName} — {item.variantName} × {item.quantity}
+                  {item.productName} - {item.variantName} × {item.quantity}
                 </span>
                 <span className="rethink-checkout__order-item-price">
                   {formatPrice(item.price * item.quantity)}

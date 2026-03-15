@@ -14,7 +14,10 @@
     align-items: center;
     gap: $space-2;
 
-    a { color: $primary; &:hover { text-decoration: underline; } }
+    a {
+      color: $primary;
+      @include hover { text-decoration: underline; }
+    }
   }
 
   &__main {
@@ -62,8 +65,10 @@
       background: none;
       padding: 0;
 
-      &:hover,
       &.rethink-product-detail__thumb--active {
+        border-color: $primary;
+      }
+      @include hover {
         border-color: $primary;
       }
 
@@ -102,7 +107,11 @@
 
   &__stars { color: $warning; font-size: 16px; }
   &__rating-num { font-weight: 700; }
-  &__review-link { color: $primary; cursor: pointer; &:hover { text-decoration: underline; } }
+  &__review-link {
+    color: $primary;
+    cursor: pointer;
+    @include hover { text-decoration: underline; }
+  }
   &__sold { color: $text-muted; }
 
   &__pricing {
@@ -156,7 +165,7 @@
     padding: $space-2 $space-4;
     font-size: 14px;
 
-    &:hover { border-color: $primary; color: $primary; }
+    @include hover { border-color: $primary; color: $primary; }
 
     &--selected {
       border-color: $primary;
@@ -196,7 +205,7 @@
       font-size: 18px;
       transition: $transition;
 
-      &:hover { background: $border; }
+      @include hover { background: $border; }
       &:disabled { opacity: 0.4; cursor: not-allowed; }
     }
 
@@ -225,7 +234,7 @@
     font-size: 16px;
     background: $danger;
 
-    &:hover { background: #b52727; }
+    @include hover { background: #b52727; }
   }
 
   &__btn--add-to-cart {
@@ -276,7 +285,7 @@
     cursor: pointer;
     transition: $transition;
 
-    &:hover { color: $primary; }
+    @include hover { color: $primary; }
 
     &--active {
       color: $primary;

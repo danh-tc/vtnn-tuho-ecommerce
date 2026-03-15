@@ -1,8 +1,8 @@
-# VTNN Tư Hồ — Project Status
+# VTNN Tư Hồ - Project Status
 
 ## Overview
 Ecommerce website for Vietnamese agricultural supplies (vật tư nông nghiệp).
-Similar to vtnnkhuya.com — green & white theme, mobile-first, Vietnamese market.
+Similar to vtnnkhuya.com - green & white theme, mobile-first, Vietnamese market.
 
 ---
 
@@ -14,7 +14,7 @@ Similar to vtnnkhuya.com — green & white theme, mobile-first, Vietnamese marke
 | Styling | SCSS + CSS Modules (`sass` package) |
 | Backend | Next.js API Routes |
 | Database | PostgreSQL + Prisma ORM 5 |
-| Auth | NextAuth.js v5 (beta) — phone-first login |
+| Auth | NextAuth.js v5 (beta) - phone-first login |
 | Image Storage | Cloudinary (free tier) |
 | Cart State | Zustand (persisted to localStorage) |
 | Forms | React Hook Form + Zod validation |
@@ -51,44 +51,44 @@ $warning:       #F57F17   // Promotions
 
 ## ✅ Completed
 
-### Phase 1 — Foundation
+### Phase 1 - Foundation
 - [x] Next.js 14 project initialized (TypeScript, App Router, src dir)
 - [x] SCSS + CSS Modules setup (`_variables.scss`, `_mixins.scss`, `globals.scss`)
-- [x] Prisma 5 schema — 13 tables (see Database section below)
+- [x] Prisma 5 schema - 13 tables (see Database section below)
 - [x] Prisma seed file with sample categories, products, admin user
-- [x] NextAuth.js v5 — phone-based login, JWT sessions, role guard middleware
+- [x] NextAuth.js v5 - phone-based login, JWT sessions, role guard middleware
 - [x] Zustand cart store (persisted to localStorage)
 - [x] `formatPrice`, `calcDiscount`, `slugify`, `generateOrderCode` utilities
 
-### Phase 2 — Storefront
-- [x] **Header** — logo, search bar, cart badge, category nav
-- [x] **Footer** — brand info, links, contact
-- [x] **Homepage** (`/`) — hero banner, trust badges, category grid, featured products, promo banner, new products
-- [x] **Product Catalog** (`/san-pham`) — sidebar filters (category, price), sort, pagination, search
-- [x] **Product Detail** (`/san-pham/[slug]`) — image gallery, variant selector, quantity control, add to cart / buy now, description & reviews tabs
-- [x] **Cart Page** (`/gio-hang`) — item list, quantity control, shipping calculation, order summary
-- [x] **Checkout Page** (`/dat-hang`) — shipping form (province/district/ward), payment method selector (COD, bank transfer, VNPay, MoMo), order submission
-- [x] **Order Success Page** (`/dat-hang/thanh-cong`) — order confirmation with code
+### Phase 2 - Storefront
+- [x] **Header** - logo, search bar, cart badge, category nav
+- [x] **Footer** - brand info, links, contact
+- [x] **Homepage** (`/`) - hero banner, trust badges, category grid, featured products, promo banner, new products
+- [x] **Product Catalog** (`/san-pham`) - sidebar filters (category, price), sort, pagination, search
+- [x] **Product Detail** (`/san-pham/[slug]`) - image gallery, variant selector, quantity control, add to cart / buy now, description & reviews tabs
+- [x] **Cart Page** (`/gio-hang`) - item list, quantity control, shipping calculation, order summary
+- [x] **Checkout Page** (`/dat-hang`) - shipping form (province/district/ward), payment method selector (COD, bank transfer, VNPay, MoMo), order submission
+- [x] **Order Success Page** (`/dat-hang/thanh-cong`) - order confirmation with code
 
-### Phase 3 — Backend APIs
-- [x] **POST `/api/orders`** — creates order, reduces stock atomically (Prisma transaction), creates payment record
-- [x] **GET/POST `/api/auth/[...nextauth]`** — NextAuth handlers
-- [x] **Login Page** (`/dang-nhap`) — phone + password, show/hide password, error messages, redirect after login
+### Phase 3 - Backend APIs
+- [x] **POST `/api/orders`** - creates order, reduces stock atomically (Prisma transaction), creates payment record
+- [x] **GET/POST `/api/auth/[...nextauth]`** - NextAuth handlers
+- [x] **Login Page** (`/dang-nhap`) - phone + password, show/hide password, error messages, redirect after login
 
-### Phase 4 — Admin Dashboard
-- [x] **Admin Layout** — sidebar nav (Dashboard, Products, Categories, Orders, Customers, Promotions, Banners, Reports)
-- [x] **Admin auth guard** — redirects customers, requires admin/staff role
-- [x] **Dashboard** (`/admin`) — revenue stats, pending orders count, low-stock alerts, recent orders table
-- [x] **Orders** (`/admin/don-hang`) — full order list with status filter, search by code/name/phone
-- [x] **Products** (`/admin/san-pham`) — product list with images, pricing, stock, publish status
+### Phase 4 - Admin Dashboard
+- [x] **Admin Layout** - sidebar nav (Dashboard, Products, Categories, Orders, Customers, Promotions, Banners, Reports)
+- [x] **Admin auth guard** - redirects customers, requires admin/staff role
+- [x] **Dashboard** (`/admin`) - revenue stats, pending orders count, low-stock alerts, recent orders table
+- [x] **Orders** (`/admin/don-hang`) - full order list with status filter, search by code/name/phone
+- [x] **Products** (`/admin/san-pham`) - product list with images, pricing, stock, publish status
 
 ---
 
 ## ❌ Not Yet Done
 
 ### Auth Pages
-- [x] Login page (`/dang-nhap`) — phone + password form
-- [ ] Register page (`/dang-ky`) — name, phone, password
+- [x] Login page (`/dang-nhap`) - phone + password form
+- [ ] Register page (`/dang-ky`) - name, phone, password
 - [ ] Forgot password / OTP via SMS (ESMS.vn)
 
 ### User Account
@@ -99,14 +99,14 @@ $warning:       #F57F17   // Promotions
 - [ ] Profile edit (`/tai-khoan/ho-so`)
 
 ### Payments (plan ready, not implemented)
-- [ ] **VietQR** — show QR code after bank transfer order (zero integration, just a URL)
+- [ ] **VietQR** - show QR code after bank transfer order (zero integration, just a URL)
   - URL: `https://img.vietqr.io/image/{BIN}-{ACCOUNT}-{TEMPLATE}.png?amount={AMOUNT}&addInfo={CODE}`
-- [ ] **VNPay** — redirect + IPN callback (`/api/payments/vnpay/return`)
+- [ ] **VNPay** - redirect + IPN callback (`/api/payments/vnpay/return`)
   - Needs: `VNPAY_TMN_CODE`, `VNPAY_HASH_SECRET`, HMAC-SHA512 signature
-- [ ] **MoMo** — redirect + IPN webhook (`/api/payments/momo/ipn`)
+- [ ] **MoMo** - redirect + IPN webhook (`/api/payments/momo/ipn`)
   - Needs: `partnerCode`, `accessKey`, `secretKey`, HMAC-SHA256 signature
 
-### Admin — Missing Pages
+### Admin - Missing Pages
 - [ ] Product create/edit form (`/admin/san-pham/them-moi`, `/admin/san-pham/[id]`)
   - Fields: name, slug, category, brand, description (rich text), variants, images (Cloudinary upload)
 - [ ] Category management (`/admin/danh-muc`)
@@ -122,9 +122,9 @@ $warning:       #F57F17   // Promotions
 ### Other
 - [ ] Cloudinary image upload helper (`/src/lib/cloudinary.ts`)
 - [ ] Product search API with autocomplete suggestions
-- [ ] SEO — sitemap.xml, robots.txt, structured data (JSON-LD)
-- [ ] Customer product reviews — submit form, approval flow
-- [ ] Coupon code at checkout — validate + apply discount
+- [ ] SEO - sitemap.xml, robots.txt, structured data (JSON-LD)
+- [ ] Customer product reviews - submit form, approval flow
+- [ ] Coupon code at checkout - validate + apply discount
 - [ ] Vercel deployment + Neon DB setup guide
 - [ ] `.env.example` file
 
@@ -133,20 +133,20 @@ $warning:       #F57F17   // Promotions
 ## Database Schema (13 tables)
 
 ```
-users              — id, name, phone*, email?, password_hash, role, is_active
-addresses          — id, user_id, recipient_name, phone, province, district, ward, street
-categories         — id, name, slug*, parent_id (self-ref), sort_order
-brands             — id, name, slug*
-products           — id, name, slug*, description, category_id, brand_id, is_published, is_featured, seo_*
-product_variants   — id, product_id, name, sku*, price(VND), sale_price, stock, is_default
-product_images     — id, product_id, variant_id?, url, sort_order, is_primary
-orders             — id, code*, user_id?, status, shipping_*(snapshot), subtotal, discount, shipping_fee, total, payment_method, payment_status
-order_items        — id, order_id, variant_id?, product_name(snapshot), unit_price(snapshot), quantity
-payments           — id, order_id, method, amount, gateway_ref, gateway_response(json), status, paid_at
-reviews            — id, product_id, user_id, order_id(verified), rating(1-5), body, is_approved
-coupons            — id, code*, type(percent/fixed), value, min_order, max_uses, expires_at
-banners            — id, title, image_url, link, position(hero/popup/category_top), is_active
-notifications      — id, user_id, type, title, message, is_read
+users              - id, name, phone*, email?, password_hash, role, is_active
+addresses          - id, user_id, recipient_name, phone, province, district, ward, street
+categories         - id, name, slug*, parent_id (self-ref), sort_order
+brands             - id, name, slug*
+products           - id, name, slug*, description, category_id, brand_id, is_published, is_featured, seo_*
+product_variants   - id, product_id, name, sku*, price(VND), sale_price, stock, is_default
+product_images     - id, product_id, variant_id?, url, sort_order, is_primary
+orders             - id, code*, user_id?, status, shipping_*(snapshot), subtotal, discount, shipping_fee, total, payment_method, payment_status
+order_items        - id, order_id, variant_id?, product_name(snapshot), unit_price(snapshot), quantity
+payments           - id, order_id, method, amount, gateway_ref, gateway_response(json), status, paid_at
+reviews            - id, product_id, user_id, order_id(verified), rating(1-5), body, is_approved
+coupons            - id, code*, type(percent/fixed), value, min_order, max_uses, expires_at
+banners            - id, title, image_url, link, position(hero/popup/category_top), is_active
+notifications      - id, user_id, type, title, message, is_read
 ```
 *unique fields
 

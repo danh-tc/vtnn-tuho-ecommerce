@@ -143,7 +143,7 @@ export default async function CatalogPage({
 
   return (
     <>
-      {/* Sidebar — sibling of catalog so .rethink-store-main is the sticky containing block */}
+      {/* Sidebar - sibling of catalog so .rethink-store-main is the sticky containing block */}
       <aside className="rethink-catalog__sidebar">
         {/* Reset filters */}
         {hasActiveFilters && (
@@ -190,7 +190,7 @@ export default async function CatalogPage({
                 defaultValue={resolvedSearchParams["gia-tu"]}
                 min={0}
               />
-              <span>—</span>
+              <span>-</span>
               <input
                 name="gia-den"
                 type="number"
