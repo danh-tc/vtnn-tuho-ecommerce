@@ -25,6 +25,7 @@ export default function ProductCard({ product }: { product: Product }) {
   const addItem = useCartStore((s) => s.addItem);
   const discount = calcDiscount(product.price, product.salePrice);
   const displayPrice = product.salePrice ?? product.price;
+  const href = `/san-pham/${product.slug}`;
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -43,7 +44,10 @@ export default function ProductCard({ product }: { product: Product }) {
   };
 
   return (
-    <Link href={`/san-pham/${product.slug}`} className="rethink-product-card">
+    <article className="rethink-product-card" style={{ position: "relative" }}>
+      {/* Full-cover link — clicking anywhere on card navigates, except the button */}
+      <Link href={href} className="rethink-product-card__cover-link" aria-label={product.name} />
+
       <div className="rethink-product-card__image">
         <Image
           src={product.primaryImage || "/images/placeholder-product.png"}
@@ -80,7 +84,7 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
       </div>
 
-      <div className="rethink-product-card__footer">
+      <div className="rethink-product-card__footer" style={{ position: "relative", zIndex: 2 }}>
         <button
           className="rethink-product-card__add-to-cart"
           onClick={handleAddToCart}
@@ -89,6 +93,6 @@ export default function ProductCard({ product }: { product: Product }) {
           {product.stock === 0 ? "Hết hàng" : "Thêm vào giỏ"}
         </button>
       </div>
-    </Link>
+    </article>
   );
 }

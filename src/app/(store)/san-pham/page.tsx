@@ -24,12 +24,24 @@ interface SearchParams {
   "noi-bat"?: string;
 }
 
+function normalizeVi(str: string): string {
+  return str
+    .toLowerCase()
+    .normalize("NFD")
+    .replaceAll(/[\u0300-\u036f]/g, "")
+    .replaceAll("đ", "d")
+    .replaceAll(/[^a-z0-9\s]/g, "")
+    .trim()
+    .replaceAll(/\s+/g, "-");
+}
+
 async function getProducts(params: SearchParams) {
   const page = parseInt(params["trang"] ?? "1");
   const skip = (page - 1) * PAGE_SIZE;
 
   const categorySlug = params["danh-muc"];
   const q = params.q;
+  const slugQ = q ? normalizeVi(q) : undefined;
   const sort = params["sap-xep"] ?? "moi-nhat";
   const priceFrom = params["gia-tu"] ? parseInt(params["gia-tu"]) : undefined;
   const priceTo = params["gia-den"] ? parseInt(params["gia-den"]) : undefined;
@@ -46,7 +58,7 @@ async function getProducts(params: SearchParams) {
     ...(q && {
       OR: [
         { name: { contains: q, mode: "insensitive" as const } },
-        { tags: { has: q } },
+        { slug: { contains: slugQ, mode: "insensitive" as const } },
       ],
     }),
     ...(priceFrom || priceTo
