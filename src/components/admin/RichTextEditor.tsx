@@ -98,7 +98,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: Props) 
       setHtmlSource(editor.getHTML());
     } else {
       // switching BACK to visual — push html into editor
-      editor.commands.setContent(htmlSource, false);
+      editor.commands.setContent(htmlSource, { emitUpdate: false });
       onChange(htmlSource);
     }
     setHtmlMode((v) => !v);
