@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,10 +20,10 @@ const loginSchema = z.object({
 
 type LoginForm = z.infer<typeof loginSchema>;
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") ?? searchParams.get("from") === "admin" ? "/admin" : "/tai-khoan";
+  const callbackUrl = searchParams.get("callbackUrl") ?? (searchParams.get("from") === "admin" ? "/admin" : "/tai-khoan");
 
   const [showPassword, setShowPassword] = useState(false);
   const [serverError, setServerError] = useState("");
@@ -54,7 +54,7 @@ export default function LoginPage() {
       return;
     }
 
-    router.push(callbackUrl as string);
+    router.push(callbackUrl);
     router.refresh();
   };
 
@@ -132,5 +132,13 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
   );
 }
