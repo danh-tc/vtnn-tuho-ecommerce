@@ -65,7 +65,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   const id = parseInt((await params).id);
   const body = await req.json().catch(() => null);
   const parsed = productSchema.safeParse(body);
-  if (!parsed.success) return NextResponse.json({ error: parsed.error.errors[0].message }, { status: 400 });
+  if (!parsed.success) return NextResponse.json({ error: parsed.error.issues[0].message }, { status: 400 });
 
   const { name, slug, variants, images, ...rest } = parsed.data;
   const finalSlug = slug || slugify(name);

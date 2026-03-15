@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+
 import { Phone, Search, User, ShoppingCart, Flame } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 import { usePathname } from "next/navigation";
