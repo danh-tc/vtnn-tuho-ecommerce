@@ -53,7 +53,7 @@ export default async function ProductDetailPage({ params }: Readonly<Props>) {
       images: { orderBy: { sortOrder: "asc" } },
       reviews: {
         where: { isApproved: true },
-        include: { user: { select: { name: true, avatarUrl: true } } },
+        include: { user: { select: { firstName: true, lastName: true, avatarUrl: true } } },
         orderBy: { createdAt: "desc" },
         take: 10,
       },
@@ -141,6 +141,13 @@ export default async function ProductDetailPage({ params }: Readonly<Props>) {
           avgRating,
           reviewCount: product.reviews.length,
           description: product.description ?? "",
+          reviews: product.reviews.map((r) => ({
+            ...r,
+            user: {
+              name: `${r.user.firstName} ${r.user.lastName}`.trim(),
+              avatarUrl: r.user.avatarUrl,
+            },
+          })),
         }}
       />
     </>
